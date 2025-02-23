@@ -1,3 +1,10 @@
-export default function Input() {
-  return <h1>This is input.</h1>;
+import React, { JSX } from "react";
+
+export default function Input(): JSX.Element {
+  return (
+    <div>
+      <input placeholder="e.g oregano"></input>
+      <button>+ Add ingredient</button>
+    </div>
+  );
 }
