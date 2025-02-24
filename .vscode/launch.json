@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Next.js",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "node",
+      "args": ["./node_modules/next/dist/bin/next", "dev"],
+      "cwd": "${workspaceFolder}",
+      "sourceMaps": true,
+      "env": {
+        "NODE_OPTIONS": "--inspect"
+      },
+      "console": "integratedTerminal"
+    }
+  ]
+}

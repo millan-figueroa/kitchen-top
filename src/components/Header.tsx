@@ -11,7 +11,7 @@ export default function Header() {
         src="./spoon-and-fork.png"
         alt="spoon and fork"
       />
-      <h1 className="text-2xl font-black text-gray-700">Robo Chef</h1>
+      <h1 className="text-2xl font-black text-gray-700">Kitchen Top</h1>
     </div>
   );
 }
