@@ -1,9 +1,9 @@
 import React, { JSX } from "react";
 
 export default function Input(): JSX.Element {
-  const ingredients = ["Chicken", "Beef", "Pork", "Fish", "Vegetables"];
+  const [ingredients, setIngredients] = React.useState<string[]>([]);
 
-  const ingredientsList = ingredients.map((ingredient) => {
+  const ingredientsListItems = ingredients.map((ingredient) => {
     return (
       <li key={ingredient} className="p-2">
         {ingredient}
@@ -11,36 +11,54 @@ export default function Input(): JSX.Element {
     );
   });
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+  function addIngredient(formData: any) {
+    // event.preventDefault();
+    // const formData = new FormData(event.currentTarget);
     const newIngredient = formData.get("ingredient");
-    ingredients.push(newIngredient as string);
-    console.log(ingredients);
+    setIngredients((prevIngredients) => [
+      ...prevIngredients,
+      newIngredient as string,
+    ]);
   }
 
   return (
-    <main className="bg-slate-100 ">
-      <form onSubmit={handleSubmit} className="flex justify-items-center p-10">
+    <main className="flex flex-col justify-center items-center w-screen mt-10 bg-background">
+      {/* Ingredients Input */}
+      <form action={addIngredient} className="flex p-10">
         <input
-          className="w-[800] h-12 border-2 p-2 mr-2 text-gray-800 border-gray-300 rounded-md"
+          className="w-[500px] h-12 mr-2 p-2 text-headline border-2 border-stroke rounded-md"
           type="text"
           placeholder="e.g oregano"
           aria-label="Ingredient input"
           name="ingredient"
         />
-        <button className="w-48 h-12 p-1 bg-gray-800 rounded-md text-sm sm:text-base lg:text-lg">
+        <button className="w-48 h-12 p-1 bg-button text-buttonText text-sm font-bold sm:text-base lg:text-lg rounded-md">
           <span className="block sm:hidden">+ Add</span>
           <span className="hidden sm:block">+ Add ingredient</span>
         </button>
       </form>
-      <div className="flex flex-col items-center justify-center mr-48 ml-48 mt-16 mb-16  bg-white">
-        <h2 className="font-black text-2xl text-gray-700 p-6">
-          Your Ingredients:
-        </h2>
-        <ul className="ml-10 p-4 list-disc text-lg font-bold text-gray-700">
-          {ingredientsList}
-        </ul>
+
+      {/* Ingredients List */}
+      {ingredientsListItems.length > 0 && (
+        <div className="flex flex-col ">
+          <h2 className="mr-64 p-2 text-3xl font-semibold text-headline">
+            Ingredients on hand:
+          </h2>
+          <ul className="ml-10 p-4 list-disc text-2xl text-paragraph">
+            {ingredientsListItems}
+          </ul>
+        </div>
+      )}
+
+      {/* Get recipe container */}
+      <div className="flex justify-between items-center w-[600px] mt-10 px-12 py-6 bg-secondary text-paragraph">
+        <div>
+          <h3 className="text-3xl text-headline">Ready for a recipe?</h3>
+          <p>Generate a recipe from your list of ingredients.</p>
+        </div>
+        <button className="px-6 py-2 bg-accent text-tertiary rounded-md">
+          Get recipe
+        </button>
       </div>
     </main>
   );
