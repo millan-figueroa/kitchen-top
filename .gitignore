@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+public/spoon-and-fork.ai
 
 # debug
 npm-debug.log*
