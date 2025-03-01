@@ -20,7 +20,7 @@ export default function Input(): JSX.Element {
       newIngredient as string,
     ]);
   }
-
+  console.log(ingredientsListItems);
   return (
     <main className="flex flex-col justify-center items-center w-screen mt-10 bg-background">
       {/* Ingredients Input */}
@@ -37,7 +37,6 @@ export default function Input(): JSX.Element {
           <span className="hidden sm:block">+ Add ingredient</span>
         </button>
       </form>
-
       {/* Ingredients List */}
       {ingredientsListItems.length > 0 && (
         <div className="flex flex-col ">
@@ -51,15 +50,17 @@ export default function Input(): JSX.Element {
       )}
 
       {/* Get recipe container */}
-      <div className="flex justify-between items-center w-[600px] mt-10 px-12 py-6 bg-secondary text-paragraph">
-        <div>
-          <h3 className="text-3xl text-headline">Ready for a recipe?</h3>
-          <p>Generate a recipe from your list of ingredients.</p>
+      {ingredientsListItems.length > 3 && (
+        <div className="flex justify-between items-center w-[600px] mt-10 px-12 py-6 bg-secondary text-paragraph">
+          <div>
+            <h3 className="text-3xl text-headline">Ready for a recipe?</h3>
+            <p>Generate a recipe from your list of ingredients.</p>
+          </div>
+          <button className="px-6 py-2 bg-accent text-tertiary rounded-md">
+            Get recipe
+          </button>
         </div>
-        <button className="px-6 py-2 bg-accent text-tertiary rounded-md">
-          Get recipe
-        </button>
-      </div>
+      )}
     </main>
   );
 }
