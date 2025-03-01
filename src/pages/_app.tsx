@@ -8,7 +8,7 @@ const phudu = Phudu({ weight: "600", subsets: ["latin"] });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <main className="bg-gray-900 text-white min-h-screen">
+    <main className="min-h-screen bg-background">
       <Header />
       <Input />
     </main>
