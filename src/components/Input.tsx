@@ -50,7 +50,7 @@ export default function Input(): JSX.Element {
       )}
 
       {/* Get recipe container */}
-      {ingredientsListItems.length > 3 && (
+      {ingredientsListItems.length > 2 && (
         <div className="flex justify-between items-center w-[600px] mt-10 px-12 py-6 bg-secondary text-paragraph">
           <div>
             <h3 className="text-3xl text-headline">Ready for a recipe?</h3>
