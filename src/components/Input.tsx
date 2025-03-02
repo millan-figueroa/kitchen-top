@@ -25,7 +25,7 @@ export default function Input(): JSX.Element {
     <main className="flex justify-center items-center">
       <div className="flex flex-col items-start mt-10 bg-background">
         {/* Ingredients Input */}
-        <form action={addIngredient} className="flex p-10">
+        <form action={addIngredient} className="flex w-full p-4 md:p-6 lg:p-8">
           <input
             className="w-full h-10 lg:h-12 mr-2 p-2 text-headline border-2 border-stroke rounded-md"
             type="text"
@@ -41,11 +41,11 @@ export default function Input(): JSX.Element {
 
         {/* Ingredients List */}
         {ingredientsListItems.length ? (
-          <div className="p-10">
-            <h2 className="p-2 text-3xl font-semibold text-headline">
+          <div className="p-6 md:p-8 lg:p-10">
+            <h2 className="md:p-2 text-lg md:text-xl lg:text-2xl font-semibold text-headline">
               Ingredients on hand:
             </h2>
-            <ul className="ml-10 p-4 list-disc text-2xl text-paragraph">
+            <ul className="ml-4 md:ml-6 lg:ml-8 md:p-2 lg:p-4 list-disc text-lg md:text-xl lg:text-2xl text-paragraph">
               {ingredientsListItems}
             </ul>
           </div>
