@@ -4,14 +4,16 @@ const phudu = Phudu({ weight: "600", subsets: ["latin"] });
 export default function Header() {
   return (
     <div
-      className={`${phudu.className} flex items-center justify-center w-full h-[100px] p-10 bg-background border-b-2 border-stroke`}
+      className={`${phudu.className} flex items-center justify-center w-full p-5 md:p-7 lg:p-10 bg-background border-b-2 border-stroke`}
     >
       <img
-        className="w-[50px] h-[50px] mr-2"
+        className="w-8 mr-2 md:w-10 lg:w-12 lg:mr-3"
         src="./spoon-and-fork.png"
         alt="spoon and fork"
       />
-      <h1 className="text-3xl font-black text-headline">Kitchen Top</h1>
+      <h1 className="text-xl md:text-2xl lg:text-3xl font-black text-headline">
+        Kitchen Top
+      </h1>
     </div>
   );
 }
