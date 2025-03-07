@@ -1,0 +1,18 @@
+0000000000000000000000000000000000000000 ac0b00274573282752c47fdf24ead4b821c46e80 millan-figueroa <millan.fig@gmail.com> 1740336203 -0800	commit (initial): Initial commit from Create Next App
+ac0b00274573282752c47fdf24ead4b821c46e80 ac0b00274573282752c47fdf24ead4b821c46e80 millan-figueroa <millan.fig@gmail.com> 1740336377 -0800	Branch: renamed refs/heads/master to refs/heads/main
+ac0b00274573282752c47fdf24ead4b821c46e80 d88177ad1b49077f30e1f20b9aa67085671df7a4 millan-figueroa <millan.fig@gmail.com> 1740340529 -0800	commit: Creates and styles header component
+d88177ad1b49077f30e1f20b9aa67085671df7a4 da940945ef76341c618c476be3fe1d274172b3c4 millan-figueroa <millan.fig@gmail.com> 1740342364 -0800	commit: Deletes unecessary files and front loads font into _app.tsx
+da940945ef76341c618c476be3fe1d274172b3c4 57c194b1eed643e2e00b7d501c2db06af9622c5e millan-figueroa <millan.fig@gmail.com> 1740342895 -0800	commit: Builds out UI for Input component
+57c194b1eed643e2e00b7d501c2db06af9622c5e 7595f9e03a41224161c92dca131e684e20062cce millan-figueroa <millan.fig@gmail.com> 1740435804 -0800	merge input-styles: Fast-forward
+7595f9e03a41224161c92dca131e684e20062cce 0790b3c3f279a0584fe09d7c04a515cf11a531bd millan-figueroa <millan.fig@gmail.com> 1740440717 -0800	commit: Creates function to grab input from form and push to ingredients array
+0790b3c3f279a0584fe09d7c04a515cf11a531bd bbdbb884bf2f07290d9d7a128c0b6f14fc17f981 millan-figueroa <millan.fig@gmail.com> 1740868496 -0800	commit: Creates get-recipe div and
+bbdbb884bf2f07290d9d7a128c0b6f14fc17f981 3138ad6319a3bc3ea8415b06911fb5235de2c8f3 millan-figueroa <millan.fig@gmail.com> 1740868548 -0800	commit: Adds global styles
+3138ad6319a3bc3ea8415b06911fb5235de2c8f3 d3116ea2f72adb8b4cd9e0e8da6e7fee29b29acf millan-figueroa <millan.fig@gmail.com> 1740868613 -0800	commit: Re-order tailwind styles to new standard
+d3116ea2f72adb8b4cd9e0e8da6e7fee29b29acf 594cf73ebe5b15186298aac1ea99afd842042aba millan-figueroa <millan.fig@gmail.com> 1740868674 -0800	commit: Updates styles, standardize tailwind utilities, imports new logo
+594cf73ebe5b15186298aac1ea99afd842042aba 2edaf2c7c6fd36e00e566aa127fbd318a6d05013 millan-figueroa <millan.fig@gmail.com> 1740868717 -0800	commit: Edits png logo to match headline color
+2edaf2c7c6fd36e00e566aa127fbd318a6d05013 57d0c6ca8007dbafafd2e82eab839f09fb4546bf millan-figueroa <millan.fig@gmail.com> 1740868904 -0800	commit: Adds Adobe file to .gitignore
+57d0c6ca8007dbafafd2e82eab839f09fb4546bf aaeb5676c4828ff82354075fb4513be636bda6ce millan-figueroa <millan.fig@gmail.com> 1740869351 -0800	commit: Adds conditional to rendering of get-recipe div to appear after three recipes have been added
+aaeb5676c4828ff82354075fb4513be636bda6ce 6b0a9c3ad2972969699c97990c5bc6beb7614fde millan-figueroa <millan.fig@gmail.com> 1740869587 -0800	commit: Changes the number of ingredients required for get-recipe div to appear
+6b0a9c3ad2972969699c97990c5bc6beb7614fde b6537197992c85713b20317dda974eb15e65b615 millan-figueroa <millan.fig@gmail.com> 1740869791 -0800	rebase (finish): refs/heads/main onto 7595f9e03a41224161c92dca131e684e20062cce
+b6537197992c85713b20317dda974eb15e65b615 a975c88cfd9004b6f28df2acd6d9266462baee4c millan-figueroa <millan.fig@gmail.com> 1740884383 -0800	merge fix-mobile-responsiveness: Fast-forward
+a975c88cfd9004b6f28df2acd6d9266462baee4c 87c665b7adf315e1330234a24da2efda71064649 millan-figueroa <millan.fig@gmail.com> 1740981313 -0800	commit: Renames Input to Main, adds hardcoded recipe functionality when get-recipe button is clicked, adds styling to recipe, adds recipeCode.md

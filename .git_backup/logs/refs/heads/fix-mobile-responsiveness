@@ -1,0 +1,6 @@
+0000000000000000000000000000000000000000 b6537197992c85713b20317dda974eb15e65b615 millan-figueroa <millan.fig@gmail.com> 1740877261 -0800	branch: Created from HEAD
+b6537197992c85713b20317dda974eb15e65b615 31be510987ce18e7d991bd4f0b4f8e03e562b9af millan-figueroa <millan.fig@gmail.com> 1740878885 -0800	commit: Adds responsive styles to header component
+31be510987ce18e7d991bd4f0b4f8e03e562b9af 4d66aa23b1381d37cfd401db7f0958e9c278cb00 millan-figueroa <millan.fig@gmail.com> 1740879529 -0800	commit: Imports Head and adds viewport
+4d66aa23b1381d37cfd401db7f0958e9c278cb00 25f4493ae24231bad6246ae57eca8591ea812460 millan-figueroa <millan.fig@gmail.com> 1740881541 -0800	commit: Fixes input/ button sizing and flow of button text
+25f4493ae24231bad6246ae57eca8591ea812460 b020bd588c05b73447e73caaf3209d71d03c08f3 millan-figueroa <millan.fig@gmail.com> 1740882681 -0800	commit: Fixes styling of ingredients form so it looks good on mobile screens
+b020bd588c05b73447e73caaf3209d71d03c08f3 a975c88cfd9004b6f28df2acd6d9266462baee4c millan-figueroa <millan.fig@gmail.com> 1740884317 -0800	commit: Fixes get-recipe div to properly size for mobile screen
