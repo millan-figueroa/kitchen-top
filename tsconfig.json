@@ -11,7 +11,11 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+<<<<<<< HEAD
     "jsx": "preserve",
+=======
+    "jsx": "react-jsx", 
+>>>>>>> b6bc1a1 (Adds forceConsistentCasingInFileNames rule and updates jsx to react-jsx to attempt to fix JSX namespace error)
     "incremental": true,
     "paths": {
       "@/*": ["./src/*"]
@@ -20,3 +24,7 @@
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> b6bc1a1 (Adds forceConsistentCasingInFileNames rule and updates jsx to react-jsx to attempt to fix JSX namespace error)
