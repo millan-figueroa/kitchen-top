@@ -1,23 +1,21 @@
 import React, { JSX } from "react";
+import InputForm from "./InputForm";
 
 export default function Main(): JSX.Element {
   const [ingredients, setIngredients] = React.useState<string[]>([]);
+  const [showRecipe, setShowRecipe] = React.useState(false);
 
   const ingredientsListItems = ingredients.map((ingredient) => {
     return <li key={ingredient}>{ingredient}</li>;
   });
 
-  function addIngredient(formData: any) {
-    // event.preventDefault();
-    // const formData = new FormData(event.currentTarget);
+  function addIngredient(formData: FormData): void {
     const newIngredient = formData.get("ingredient");
     setIngredients((prevIngredients) => [
       ...prevIngredients,
       newIngredient as string,
     ]);
   }
-
-  const [showRecipe, setShowRecipe] = React.useState(false);
 
   function toggleRecipe() {
     setShowRecipe((prevShowRecipe) => !prevShowRecipe);
@@ -27,19 +25,7 @@ export default function Main(): JSX.Element {
     <main className="flex flex-col justify-center items-center">
       <div className="flex flex-col items-start mt-10 bg-background">
         {/* Ingredients Input */}
-        <form action={addIngredient} className="flex w-full p-4 md:p-6 lg:p-8">
-          <input
-            className="w-full h-10 lg:h-12 mr-2 pl-2 text-headline border-2 border-stroke rounded-md"
-            type="text"
-            placeholder="e.g oregano"
-            aria-label="Ingredient input"
-            name="ingredient"
-          />
-          <button className="w-32 h-10 md:w-48 lg:w-60 lg:h-12 p-1 bg-button text-buttonText text-sm md:text-md lg:text-md rounded-md">
-            <span className="block md:hidden">+ Add</span>
-            <span className="hidden md:block lg:block">+ Add ingredient</span>
-          </button>
-        </form>
+        <InputForm addIngredient={addIngredient} />
 
         {/* Ingredients List */}
         {ingredientsListItems.length ? (
