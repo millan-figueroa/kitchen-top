@@ -6,7 +6,7 @@ import { getRecipeFromMistral } from "@/pages/api/getFromAI";
 
 export default function Main(): JSX.Element {
   const [ingredients, setIngredients] = React.useState<string[]>([]);
-  const [recipe, setRecipe] = React.useState("");
+  const [recipe, setRecipe] = React.useState<string>("");
 
   //Add new ingredient to the list
   function addIngredient(formData: FormData): void {
@@ -19,11 +19,8 @@ export default function Main(): JSX.Element {
 
   //Function passed to IngredientsList component to fetch recipe from AI
   async function getRecipe() {
-    // setRecipe((prevrecipe) => !prevrecipe);
-    if (!recipe) {
-      const recipeMarkdown = await getRecipeFromMistral(ingredients);
-      console.log(recipeMarkdown);
-    }
+    const recipeMarkdown = await getRecipeFromMistral(ingredients);
+    setRecipe(recipeMarkdown);
   }
 
   return (
@@ -34,16 +31,12 @@ export default function Main(): JSX.Element {
 
         {/* IngredientsList (and get recipe) Component */}
         {ingredients.length ? (
-          <IngredientsList
-            ingredients={ingredients}
-            getRecipe={getRecipe}
-            // showRecipe={recipe}
-          />
+          <IngredientsList ingredients={ingredients} getRecipe={getRecipe} />
         ) : null}
       </div>
 
       {/* Recipe suggestion */}
-      {recipe && <Recipe />}
+      {recipe && <Recipe recipe={recipe} />}
     </main>
   );
 }
