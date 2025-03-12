@@ -2,12 +2,11 @@ import React, { JSX } from "react";
 import InputForm from "./InputForm";
 import Recipe from "./Recipe";
 import IngredientsList from "./IngredientsList";
-import { getFromAI } from "@/pages/api/getFromAI";
+import { getRecipeFromMistral } from "@/pages/api/getFromAI";
 
 export default function Main(): JSX.Element {
   const [ingredients, setIngredients] = React.useState<string[]>([]);
-  // const [showRecipe, setShowRecipe] = React.useState(false);
-  const [fetchRecipe, setFetchRecipe] = React.useState(false);
+  const [recipe, setRecipe] = React.useState("");
 
   //Add new ingredient to the list
   function addIngredient(formData: FormData): void {
@@ -18,12 +17,12 @@ export default function Main(): JSX.Element {
     ]);
   }
 
-  //Function passed to IngredientsList component to fetch recipe
-  async function toggleRecipe() {
-    setFetchRecipe((prevFetchRecipe) => !prevFetchRecipe);
-    if (!fetchRecipe) {
-      const recipe = await getFromAI(ingredients);
-      console.log(recipe);
+  //Function passed to IngredientsList component to fetch recipe from AI
+  async function getRecipe() {
+    // setRecipe((prevrecipe) => !prevrecipe);
+    if (!recipe) {
+      const recipeMarkdown = await getRecipeFromMistral(ingredients);
+      console.log(recipeMarkdown);
     }
   }
 
@@ -37,14 +36,14 @@ export default function Main(): JSX.Element {
         {ingredients.length ? (
           <IngredientsList
             ingredients={ingredients}
-            toggleRecipe={toggleRecipe}
-            showRecipe={fetchRecipe}
+            getRecipe={getRecipe}
+            // showRecipe={recipe}
           />
         ) : null}
       </div>
 
       {/* Recipe suggestion */}
-      {fetchRecipe && <Recipe />}
+      {recipe && <Recipe />}
     </main>
   );
 }

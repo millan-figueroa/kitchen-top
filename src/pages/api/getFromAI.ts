@@ -11,7 +11,7 @@ interface ChatCompletionResponse {
   choices: { message: { role: string; content?: string } }[];
 }
 
-export async function getFromAI(ingredientsArr: string[]): Promise<string> {
+export async function getRecipeFromMistral(ingredientsArr: string[]): Promise<string> {
   const ingredientsString = ingredientsArr.join(", ")
   try {
     const response: ChatCompletionResponse = await hf.chatCompletion({

@@ -2,20 +2,21 @@ import React, { JSX } from "react";
 
 type IngredientsListProps = {
   ingredients: string[];
-  toggleRecipe: () => void;
-  showRecipe: boolean;
+  getRecipe: () => void;
+  // showRecipe: boolean;
 };
 
 export default function IngredientsList({
   ingredients,
-  toggleRecipe,
-  showRecipe,
-}: IngredientsListProps): JSX.Element {
+  getRecipe,
+}: // showRecipe,
+IngredientsListProps): JSX.Element {
   const ingredientsListItems = ingredients.map((ingredient) => {
     return <li key={ingredient}>{ingredient}</li>;
   });
 
   return (
+    // Show ingredients list when user inputs more than 2 ingredients
     <div className="px-8 py-4 md:px-6 md:py-2">
       <h2 className="md:p-2 text-xl md:text-2xl lg:text-3xl font-semibold text-headline">
         Ingredients on hand:
@@ -36,7 +37,7 @@ export default function IngredientsList({
             </p>
           </div>
           <button
-            onClick={toggleRecipe}
+            onClick={getRecipe}
             className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md"
           >
             Get recipe!
