@@ -3,14 +3,12 @@ import React, { JSX } from "react";
 type IngredientsListProps = {
   ingredients: string[];
   getRecipe: () => void;
-  // showRecipe: boolean;
 };
 
 export default function IngredientsList({
   ingredients,
   getRecipe,
-}: // showRecipe,
-IngredientsListProps): JSX.Element {
+}: IngredientsListProps): JSX.Element {
   const ingredientsListItems = ingredients.map((ingredient) => {
     return <li key={ingredient}>{ingredient}</li>;
   });
