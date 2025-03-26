@@ -19,57 +19,58 @@ XAutomatically scroll into view when new recipe is generated
 -User account with ability to save recipes*/
 
 export default function Main(): JSX.Element {
-  const [ingredients, setIngredients] = React.useState<string[]>([]);
-  const [recipe, setRecipe] = React.useState<string>("");
-  const recipeSection = React.useRef<HTMLDivElement>(null);
+	const [ingredients, setIngredients] = React.useState<string[]>([]);
+	const [recipe, setRecipe] = React.useState<string>("");
+	const recipeSection = React.useRef<HTMLDivElement>(null);
 
-  //Add new ingredient to the list
-  function addIngredient(formData: FormData): void {
-    const newIngredient = formData.get("ingredient");
-    setIngredients((prevIngredients) => [
-      ...prevIngredients,
-      newIngredient as string,
-    ]);
-  }
+	//Add new ingredient to the list
+	function addIngredient(formData: FormData): void {
+		const newIngredient = formData.get("ingredient");
+		setIngredients((prevIngredients) => [
+			...prevIngredients,
+			newIngredient as string,
+		]);
+	}
 
-  //Function passed to IngredientsList component to fetch recipe from AI
-  async function getRecipe() {
-    const recipeMarkdown = await getRecipeFromMistral(ingredients);
-    setRecipe(recipeMarkdown);
-  }
+	//Function passed to IngredientsList component to fetch recipe from AI
+	async function getRecipe() {
+		const recipeMarkdown = await getRecipeFromMistral(ingredients);
+		setRecipe(recipeMarkdown);
+	}
 
-  // Scroll to the recipe section when the recipe is generated
-  useEffect(() => {
-    if (recipe && recipeSection.current) {
-      recipeSection.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [recipe]);
+	// Scroll to the recipe section when the recipe is generated
+	useEffect(() => {
+		if (recipe && recipeSection.current) {
+			recipeSection.current.scrollIntoView({ behavior: "smooth" });
+		}
+	}, [recipe]);
 
-  return (
-    <main className="flex flex-col justify-center items-center">
-      <div className="flex flex-col items-start mt-10 bg-background">
-        {/* InputForm Component */}
-        <InputForm
-          addIngredient={addIngredient}
-          // recipeSection={recipeSection}
-        />
+	return (
+		<main className="flex flex-col justify-center items-center">
+			<div className="flex flex-col items-start mt-10 bg-background">
+				{/* InputForm Component */}
+				<InputForm
+					addIngredient={addIngredient}
+					// recipeSection={recipeSection}
+				/>
 
-        {/* IngredientsList (and get recipe) Component */}
-        {ingredients.length ? (
-          <IngredientsList
-            ingredients={ingredients}
-            getRecipe={getRecipe}
-            // recipeSection={recipeSection}
-          />
-        ) : null}
-      </div>
+				{/* IngredientsList (and get recipe) Component */}
+				{ingredients.length ? (
+					<IngredientsList
+						ingredients={ingredients}
+						getRecipe={getRecipe}
+						// recipeSection={recipeSection}
+						setIngredients={setIngredients}
+					/>
+				) : null}
+			</div>
 
-      {/* Recipe suggestion */}
-      {recipe && (
-        <div ref={recipeSection}>
-          <Recipe recipe={recipe} />
-        </div>
-      )}
-    </main>
-  );
+			{/* Recipe suggestion */}
+			{recipe && (
+				<div ref={recipeSection}>
+					<Recipe recipe={recipe} />
+				</div>
+			)}
+		</main>
+	);
 }
