@@ -9,17 +9,36 @@ type IngredientsListProps = {
 export default function IngredientsList({
 	ingredients,
 	getRecipe,
+	setIngredients,
 }: IngredientsListProps): JSX.Element {
 	const ingredientsListItems = ingredients.map((ingredient, index) => {
 		return (
 			<li key={index}>
 				{ingredient}
-				<span className="pl-4"> X </span>
+				<span
+					className="pl-4 text-sm cursor-pointer"
+					onClick={() => removeItem(index)}>
+					{" "}
+					X{" "}
+				</span>
 			</li>
 		);
 	});
 
-	const removeItem = (id: number) => {};
+	const removeItem = (id: number) => {
+		let listIndex = 0;
+		//filter the list and remove the item
+		setIngredients(
+			ingredients.filter((item) => {
+				if (listIndex === id) {
+					listIndex++;
+					return;
+				}
+				listIndex++;
+				return item;
+			})
+		);
+	};
 
 	return (
 		// Show ingredients list when user inputs more than 2 ingredients
