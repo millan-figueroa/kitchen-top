@@ -4,12 +4,14 @@ type IngredientsListProps = {
 	ingredients: string[];
 	getRecipe: () => void;
 	setIngredients: React.Dispatch<React.SetStateAction<string[]>>;
+	setRecipe: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default function IngredientsList({
 	ingredients,
 	getRecipe,
 	setIngredients,
+	setRecipe,
 }: IngredientsListProps): JSX.Element {
 	const ingredientsListItems = ingredients.map((ingredient, index) => {
 		return (
@@ -35,6 +37,8 @@ export default function IngredientsList({
 					return;
 				}
 				listIndex++;
+				//delete the previous recipe due to removing ingredient
+				setRecipe("");
 				return item;
 			})
 		);

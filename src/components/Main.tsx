@@ -60,6 +60,7 @@ export default function Main(): JSX.Element {
 						ingredients={ingredients}
 						getRecipe={getRecipe}
 						// recipeSection={recipeSection}
+						setRecipe={setRecipe}
 						setIngredients={setIngredients}
 					/>
 				) : null}
