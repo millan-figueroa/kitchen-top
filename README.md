@@ -1,40 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Kitchen Top
+
+An app that takes ingredients you have on hand and makes a recipe from it.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [API Routes](#api-routes)
+- [Tech Stack](#tech-stack)
+- [Learn More](#learn-more)
+- [Deployment](#deployment)
+- [License](#license)
+
+---
+
+## Overview
+
+**Kitchen Top** is a web application built with [Next.js](https://nextjs.org), designed to help you find recipes based on the ingredients you have at home. Simply enter your available ingredients, and Kitchen Top will suggest recipes you can make.
+
+## Features
+
+- Input ingredients you have on hand
+- Get recipe suggestions based on available ingredients
+- Fast, responsive interface
+- Built with TypeScript and Next.js
+- Leverages a machine learning model (mistralai/Mistral-7B-Instruct-v0.3) from Hugging Face to generate recipe suggestions
+- Easily extensible and deployable
 
 ## Getting Started
 
-First, run the development server:
+To set up and run the project locally:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Clone the repository:**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   git clone https://github.com/millan-figueroa/kitchen-top.git
+   cd kitchen-top
+   ```
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+2. **Install dependencies:**
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   # or
+   bun install
+   ```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+3. **Start the development server:**
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   # or
+   bun dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Usage
+
+- Edit `pages/index.tsx` to customize the main page.
+- The app updates automatically as you save changes.
+
+## API Routes
+
+- API routes are located in the `pages/api` directory.
+- Example endpoint: [http://localhost:3000/api/hello](http://localhost:3000/api/hello)
+- You can add custom API endpoints as needed.
+
+---
+
+## Tech Stack
+
+- [Next.js](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [Tailwind CSS](https://tailwindcss.com/) – utility-first CSS framework
+- [Hugging Face](https://huggingface.co/) – for AI/ML model integration
+- [Shell Scripts](https://www.gnu.org/software/bash/)
+- [Geist Font](https://vercel.com/font) via `next/font`
+
+---
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Learn Next.js](https://nextjs.org/learn-pages-router)
+- [Next.js GitHub](https://github.com/vercel/next.js)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The easiest way to deploy your Next.js app is via [Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
 
-## Deploy on Vercel
+For more deployment options, see the [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+This project is licensed under the [MIT License](LICENSE).
+
+---
