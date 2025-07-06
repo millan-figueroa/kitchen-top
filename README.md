@@ -1,4 +1,4 @@
-# Kitchen Top
+# Kitchen Top 🍽️🍷🍝
 
 An app that takes ingredients you have on hand and makes a recipe from it.
 
@@ -13,8 +13,6 @@ An app that takes ingredients you have on hand and makes a recipe from it.
 - [Learn More](#learn-more)
 - [Deployment](#deployment)
 - [License](#license)
-
----
 
 ## Overview
 
@@ -77,8 +75,6 @@ To set up and run the project locally:
 - Example endpoint: [http://localhost:3000/api/hello](http://localhost:3000/api/hello)
 - You can add custom API endpoints as needed.
 
----
-
 ## Tech Stack
 
 - [Next.js](https://nextjs.org/)
@@ -88,8 +84,6 @@ To set up and run the project locally:
 - [Hugging Face](https://huggingface.co/) – for AI/ML model integration
 - [Shell Scripts](https://www.gnu.org/software/bash/)
 - [Geist Font](https://vercel.com/font) via `next/font`
-
----
 
 ## Learn More
 
@@ -106,5 +100,3 @@ For more deployment options, see the [Next.js deployment documentation](https://
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
----
