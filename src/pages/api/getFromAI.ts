@@ -1,4 +1,4 @@
-import { HfInference } from '@huggingface/inference'
+import { InferenceClient } from '@huggingface/inference'
 import { useEffect, useState } from "react";
 
 const SYSTEM_PROMPT = `
@@ -18,7 +18,7 @@ You are an assistant that receives a list of ingredients that a user has and sug
  ## Feel free to add additional ingredients to modify the recipe!
 `
 const HF_ACCESS_TOKEN = process.env.NEXT_PUBLIC_HF_ACCESS_TOKEN;
-const hf = new HfInference(HF_ACCESS_TOKEN);
+const hf = new InferenceClient(HF_ACCESS_TOKEN);
 
 interface ChatCompletionResponse {
   choices: { message: { role: string; content?: string } }[];
