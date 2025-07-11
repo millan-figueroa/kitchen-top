@@ -1,42 +1,80 @@
-import React, { JSX } from "react";
+import { useState } from "react";
 
-type SignUpFormProps = {
-  onSignUp: (formData: FormData) => void;
+type FormData = {
+  email: string;
+  password: string;
+  confirmPassword: string;
 };
 
-export default function SignUpForm({ onSignUp }: SignUpFormProps): JSX.Element {
+type Props = {
+  onSignUp?: (formData: FormData) => void;
+};
+
+export default function SignUpForm({ onSignUp }: Props) {
+  const [formData, setFormData] = useState<FormData>({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+    onSignUp?.(formData);
+  };
+
   return (
     <form
-      action={onSignUp}
-      className="flex flex-col w-full gap-4 p-4 md:p-6 lg:p-8"
+      onSubmit={handleSubmit}
+      className="flex flex-col w-full max-w-md p-6 md:p-8 lg:p-10 bg-#d1d1d1 rounded-xl border-2 border-stroke space-y-5"
     >
+      <h2 className="text-xl font-semibold text-headline text-center">
+        Create an Account
+      </h2>
+
       <input
-        className="w-full h-10 lg:h-12 pl-2 text-headline border-2 border-stroke rounded-md"
-        type="text"
-        placeholder="Username"
-        aria-label="Username"
-        name="username"
-        required
-      />
-      <input
-        className="w-full h-10 lg:h-12 pl-2 text-headline border-2 border-stroke rounded-md"
+        name="email"
         type="email"
         placeholder="Email"
-        aria-label="Email"
-        name="email"
+        value={formData.email}
+        onChange={handleChange}
         required
+        className="h-10 lg:h-12 px-3 text-headline border-2 border-stroke rounded-md focus:outline-none focus:ring-2 focus:ring-button"
       />
+
       <input
-        className="w-full h-10 lg:h-12 pl-2 text-headline border-2 border-stroke rounded-md"
+        name="password"
         type="password"
         placeholder="Password"
-        aria-label="Password"
-        name="password"
+        value={formData.password}
+        onChange={handleChange}
         required
+        className="h-10 lg:h-12 px-3 text-headline border-2 border-stroke rounded-md focus:outline-none focus:ring-2 focus:ring-button"
       />
-      <button className="w-full h-10 lg:h-12 p-1 bg-button text-buttonText text-sm md:text-md lg:text-md rounded-md">
-        <span className="block md:hidden">Sign Up</span>
-        <span className="hidden md:block lg:block">Create Account</span>
+
+      <input
+        name="confirmPassword"
+        type="password"
+        placeholder="Confirm Password"
+        value={formData.confirmPassword}
+        onChange={handleChange}
+        required
+        className="h-10 lg:h-12 px-3 text-headline border-2 border-stroke rounded-md focus:outline-none focus:ring-2 focus:ring-button"
+      />
+
+      <button
+        type="submit"
+        className="h-10 md:h-12 w-full bg-button text-buttonText text-sm md:text-md font-medium rounded-md hover:opacity-90 transition"
+      >
+        Sign Up
       </button>
     </form>
   );
