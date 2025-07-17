@@ -12,7 +12,9 @@ const firebaseConfig = {
 };
 
 
-// const app = initializeApp(firebaseConfig);
+
+
+//const app = initializeApp(firebaseConfig);
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
 

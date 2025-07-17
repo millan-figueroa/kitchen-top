@@ -1,4 +1,6 @@
+import { auth } from "@/firebase/config";
 import { useState } from "react";
+import { createUser } from "@/firebase/auth";
 
 type FormData = {
   email: string;
@@ -6,11 +8,7 @@ type FormData = {
   confirmPassword: string;
 };
 
-type Props = {
-  onSignUp?: (formData: FormData) => void;
-};
-
-export default function SignUpForm({ onSignUp }: Props) {
+export default function SignUpForm() {
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -28,7 +26,8 @@ export default function SignUpForm({ onSignUp }: Props) {
       alert("Passwords do not match.");
       return;
     }
-    onSignUp?.(formData);
+    console.log(formData);
+    createUser(formData);
   };
 
   return (
