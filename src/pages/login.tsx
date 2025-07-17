@@ -1,4 +1,5 @@
 import LoginForm from "@/components/LoginForm";
+import { currentUser } from "@/firebase/auth";
 
 export default function LoginPage() {
   return (

@@ -14,6 +14,12 @@ export default function Header() {
       <h1 className="text-xl md:text-2xl lg:text-3xl font-black text-headline">
         Kitchen Top
       </h1>
+      <button
+        type="submit"
+        className="h-10 md:h-12 bg-button text-buttonText text-sm md:text-md font-medium rounded-md hover:opacity-90 transition"
+      >
+        Login
+      </button>
     </div>
   );
 }

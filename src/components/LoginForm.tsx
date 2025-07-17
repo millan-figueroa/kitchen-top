@@ -1,6 +1,6 @@
 import { auth } from "@/firebase/config";
 import { useState } from "react";
-import { signInUser } from "@/firebase/auth";
+import { signInUser, currentUser } from "@/firebase/auth";
 import Link from "next/link";
 
 type FormData = {
@@ -23,7 +23,11 @@ export default function LoginForm() {
     e.preventDefault();
     console.log(formData);
     signInUser(formData);
+    window.location.href = "/userpage";
   };
+
+  console.log("This is that logged in user info by abel:", currentUser());
+  console.log("This typeof:", typeof currentUser());
 
   return (
     <form
@@ -60,6 +64,7 @@ export default function LoginForm() {
       >
         Login
       </button>
+
       <Link href="/signup">
         <button className="h-10 md:h-12 w-full bg-button text-buttonText text-sm md:text-md font-medium rounded-md hover:opacity-90 transition">
           Register
