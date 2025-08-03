@@ -21,9 +21,9 @@ export default function Header() {
 
       <button
         onClick={() => (window.location.href = "/login")}
-        className="px-3 py-1 border-2 border-headline rounded-md text-headline hover:bg-button hover:text-buttonText hover:border-buttonText transition duration-300 ease-in-out"
+        className="px-3 py-1 border-2 border-stroke rounded-md text-headline hover:bg-button hover:text-buttonText hover:border-buttonText transition duration-300 ease-in-out"
       >
-        <FaUser className="block md:hidden w-4 h-4" />
+        <FaUser className="block md:hidden w-3 h-4" />
         <span className="hidden md:block  text-sm md:text-md">Login</span>
       </button>
     </div>
