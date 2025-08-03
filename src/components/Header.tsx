@@ -4,16 +4,10 @@ const phudu = Phudu({ weight: "600", subsets: ["latin"] });
 
 export default function Header() {
   return (
-<<<<<<< HEAD
-    <div className="flex items-center justify-center w-full p-3 md:p-4 lg:p-7s bg-background border-b-2 border-stroke">
-      <div
-        className={`${phudu.className} flex items-center justify-start w-full p-2 md:p-4 lg:p-6`}
-=======
     <div className="flex items-center justify-center w-full p-4 md:p-5 lg:p-6 bg-background border-b-2 border-stroke">
       <div
         onClick={() => (window.location.href = "/")}
         className={`${phudu.className} flex items-center justify-start w-full `}
->>>>>>> 4e9ea9481dcffed51684e2821b39ab14c4a36d61
       >
         <img
           className="w-6 mr-2 md:w-10 lg:w-12 lg:mr-3"
@@ -24,13 +18,6 @@ export default function Header() {
           Kitchen Top
         </h1>
       </div>
-<<<<<<< HEAD
-      <button
-        onClick={() => (window.location.href = "/login")}
-        className="px-3 py-1 bg-button text-buttonText text-sm md:text-md lg:text-lg rounded-md"
-      >
-        Login
-=======
 
       <button
         onClick={() => (window.location.href = "/login")}
@@ -38,7 +25,6 @@ export default function Header() {
       >
         <FaUser className="block md:hidden w-3 h-4" />
         <span className="hidden md:block  text-sm md:text-md">Login</span>
->>>>>>> 4e9ea9481dcffed51684e2821b39ab14c4a36d61
       </button>
     </div>
   );
