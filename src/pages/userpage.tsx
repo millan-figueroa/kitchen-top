@@ -20,8 +20,8 @@ export default function UserPage() {
   }, []);
 
   return (
-    <div className="bg-black text-white min-h-screen flex items-center justify-center">
-      <h1>User Account</h1>
+    <div className="flex flex-col w-full max-w-md p-6 md:p-8 lg:p-10 text-headline text-center">
+      <h2 className="text-xl font-semibold p-10">User Account</h2>
       <div>
         {user ? (
           <>
