@@ -33,7 +33,7 @@ export default function SignUpForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col w-full max-w-md p-6 md:p-8 lg:p-10 bg-#d1d1d1 rounded-xl border-2 border-stroke space-y-5"
+      className="flex flex-col w-full max-w-md p-6 md:p-8 lg:p-10  rounded-xl border-2 border-stroke space-y-5"
     >
       <h2 className="text-xl font-semibold text-headline text-center">
         Create an Account
