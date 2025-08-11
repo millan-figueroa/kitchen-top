@@ -1,23 +1,32 @@
 "use client";
-import { currentUser } from "@/firebase/auth";
 import { useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/config";
-
-type User = {
-  email?: string;
-  uid?: string;
-};
+import {
+  onAuthStateChanged,
+  signOut,
+  User as FirebaseUser,
+} from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 export default function UserPage() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<FirebaseUser | null>(null);
+  const router = useRouter();
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);
     });
-
     return () => unsubscribe();
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push("/"); // redirect after logout
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   return (
     <div className="flex flex-col w-full max-w-md p-6 md:p-8 lg:p-10 text-headline text-center">
@@ -32,6 +41,13 @@ export default function UserPage() {
           <p>No user found.</p>
         )}
       </div>
+      <button
+        onClick={handleLogout}
+        className="w-32 h-10 md:w-48 lg:w-60 lg:h-12 p-1 bg-button text-buttonText text-sm md:text-md lg:text-md rounded-md"
+      >
+        <span className="block md:hidden">Log Out</span>
+        <span className="hidden md:block lg:block">Log Out</span>
+      </button>
     </div>
   );
 }
