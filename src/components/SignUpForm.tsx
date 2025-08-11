@@ -1,4 +1,5 @@
 import { auth } from "@/firebase/config";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { createUser } from "@/firebase/auth";
 
@@ -20,14 +21,22 @@ export default function SignUpForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match.");
       return;
     }
-    console.log(formData);
-    createUser(formData);
+    try {
+      const user = await createUser({
+        email: formData.email,
+        password: formData.password,
+      });
+      console.log("User created:", user);
+      // e.g. redirect or show success message here
+    } catch (error: any) {
+      alert(error.message || "Failed to create account.");
+    }
   };
 
   return (
