@@ -1,8 +1,9 @@
-import React, { JSX, useRef, useEffect } from "react";
+import React, { JSX, useRef, useEffect, useContext } from "react";
 import InputForm from "./InputForm";
 import Recipe from "./Recipe";
 import IngredientsList from "./IngredientsList";
 import { getRecipeFromMistral } from "@/pages/api/getFromAI";
+import { UserContext } from "@/context/UserContext";
 
 /* TODO:
 XAutomatically scroll into view when new recipe is generated 
@@ -21,6 +22,8 @@ Xloading spinner to let user know recipe is being fetched
 -User account with ability to save recipe */
 
 export default function Main(): JSX.Element {
+  // Get user value from UserContext
+  const { user } = useContext(UserContext);
   const [ingredients, setIngredients] = React.useState<string[]>([]);
   const [recipe, setRecipe] = React.useState<string>("");
   const recipeSection = React.useRef<HTMLDivElement>(null);
