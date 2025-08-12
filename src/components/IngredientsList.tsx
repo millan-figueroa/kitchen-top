@@ -104,7 +104,7 @@ export default function IngredientsList({
 							<button
 								onClick={getRecipe}
 								className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
-								Save
+								New Recipe
 							</button>
 							{user ? (
 								<button
