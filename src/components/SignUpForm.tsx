@@ -2,6 +2,7 @@ import { auth } from "@/firebase/config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { createUser } from "@/firebase/auth";
+import Router from "next/router";
 
 type FormData = {
   email: string;
@@ -33,7 +34,7 @@ export default function SignUpForm() {
         password: formData.password,
       });
       console.log("User created:", user);
-      // e.g. redirect or show success message here
+      Router.push("/userpage"); // Redirect to user page after successful signup
     } catch (error: any) {
       alert(error.message || "Failed to create account.");
     }
