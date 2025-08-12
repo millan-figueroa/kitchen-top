@@ -1,10 +1,14 @@
+import { UserContext } from "@/context/UserContext";
 import React, { JSX } from "react";
+import Router from "next/router";
 
 type IngredientsListProps = {
 	ingredients: string[];
 	getRecipe: () => void;
 	setIngredients: React.Dispatch<React.SetStateAction<string[]>>;
 	setRecipe: React.Dispatch<React.SetStateAction<string>>;
+	getRecipeStatus: boolean;
+	setGetRecipeStatus: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function IngredientsList({
@@ -12,7 +16,16 @@ export default function IngredientsList({
 	getRecipe,
 	setIngredients,
 	setRecipe,
+	getRecipeStatus,
+	setGetRecipeStatus,
 }: IngredientsListProps): JSX.Element {
+	//get user from userContext
+	const { user } = React.useContext(UserContext);
+	//check ingredients list update
+	React.useEffect(() => {
+		setGetRecipeStatus(false);
+	}, [ingredients]);
+
 	const ingredientsListItems = ingredients.map((ingredient, index) => {
 		return (
 			<li key={index}>
@@ -55,23 +68,65 @@ export default function IngredientsList({
 			</ul>
 
 			{/* Get recipe container */}
-			{ingredientsListItems.length > 2 && (
-				<div className="flex justify-between items-center w-full px-6 md:px-10 lg:px-12 p-4 md:p-6 lg:py-8 mt-8 bg-secondary text-paragraph  rounded-lg">
-					<div className="p-2 mr-4">
-						<h3 className="text-lg md:text-xl lg:text-2xl font-bold text-headline">
-							Ready for a recipe?
-						</h3>
-						<p className="mt-2 lg:mt-4">
-							Generate a recipe from your list of ingredients.
-						</p>
+			{ingredientsListItems.length > 2 &&
+				(!getRecipeStatus ? (
+					<div className="flex justify-between items-center w-full px-6 md:px-10 lg:px-12 p-4 md:p-6 lg:py-8 mt-8 bg-secondary text-paragraph  rounded-lg">
+						<div className="p-2 mr-4">
+							<h3 className="text-lg md:text-xl lg:text-2xl font-bold text-headline">
+								Ready for a recipe?
+							</h3>
+							<p className="mt-2 lg:mt-4">
+								Generate a recipe from your list of ingredients.
+							</p>
+						</div>
+						<button
+							onClick={getRecipe}
+							className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
+							Get recipe!
+						</button>
 					</div>
-					<button
-						onClick={getRecipe}
-						className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
-						Get recipe!
-					</button>
-				</div>
-			)}
+				) : (
+					<div className="flex justify-between items-center w-full px-6 md:px-10 lg:px-12 p-4 md:p-6 lg:py-8 mt-8 bg-secondary text-paragraph  rounded-lg">
+						{/* <div className="p-2 mr-4">
+							<h3 className="text-lg md:text-xl lg:text-2xl font-bold text-headline">
+								Ready for a recipe?
+							</h3>
+							<p className="mt-2 lg:mt-4">
+								Generate a recipe from your list of ingredients.
+							</p>
+						</div> */}
+						<div className="flex gap-4">
+							<button
+								onClick={getRecipe}
+								className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
+								Download
+							</button>
+							<button
+								onClick={getRecipe}
+								className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
+								Save
+							</button>
+							{user ? (
+								<button
+									onClick={getRecipe}
+									className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
+									Like
+								</button>
+							) : (
+								<button
+									onClick={() => Router.push("/login")}
+									className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
+									Login
+								</button>
+							)}
+							<button
+								onClick={getRecipe}
+								className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
+								Share
+							</button>
+						</div>
+					</div>
+				))}
 		</div>
 	);
 }
