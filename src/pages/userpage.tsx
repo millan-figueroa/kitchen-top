@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { auth } from "../firebase/config";
 import {
   onAuthStateChanged,
@@ -7,26 +7,28 @@ import {
   User as FirebaseUser,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { UserContext } from "@/context/UserContext";
 
 export default function UserPage() {
-  const [user, setUser] = useState<FirebaseUser | null>(null);
-  const router = useRouter();
+  const { user, handleLogout } = useContext(UserContext);
+  // const [user, setUser] = useState<FirebaseUser | null>(null);
+  // const router = useRouter();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      setUser(firebaseUser);
-    });
-    return () => unsubscribe();
-  }, []);
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+  //     setUser(firebaseUser);
+  //   });
+  //   return () => unsubscribe();
+  // }, []);
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      router.push("/"); // redirect after logout
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
+  // const handleLogout = async () => {
+  //   try {
+  //     await signOut(auth);
+  //     router.push("/"); // redirect after logout
+  //   } catch (error) {
+  //     console.error("Logout failed:", error);
+  //   }
+  // };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background">

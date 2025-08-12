@@ -1,7 +1,9 @@
 import { auth } from "@/firebase/config";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { signInUser, currentUser } from "@/firebase/auth";
 import Link from "next/link";
+import { UserContext } from "@/context/UserContext";
+import Router from "next/router";
 
 type FormData = {
   email: string;
@@ -9,6 +11,8 @@ type FormData = {
 };
 
 export default function LoginForm() {
+  //setUser after login in
+  const { setUser } = useContext(UserContext);
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -23,11 +27,14 @@ export default function LoginForm() {
     e.preventDefault();
     console.log(formData);
     signInUser(formData);
-    window.location.href = "/userpage";
+    //update the user state in UserContext
+    setUser(currentUser());
+    // Redirect to user page after login
+    Router.push("/userpage");
   };
 
-  // console.log("This is that logged in user info by abel:", currentUser());
-  // console.log("This typeof:", typeof currentUser());
+  console.log("This is that logged in user info by abel:", currentUser());
+  console.log("This typeof:", typeof currentUser());
 
   return (
     <form

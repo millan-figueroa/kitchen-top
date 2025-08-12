@@ -23,7 +23,7 @@ Xloading spinner to let user know recipe is being fetched
 
 export default function Main(): JSX.Element {
   // Get user value from UserContext
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
   const [ingredients, setIngredients] = React.useState<string[]>([]);
   const [recipe, setRecipe] = React.useState<string>("");
   const recipeSection = React.useRef<HTMLDivElement>(null);

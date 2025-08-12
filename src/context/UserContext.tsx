@@ -22,8 +22,18 @@ const UserContextProvider = (props) => {
     return () => unsubscribe();
   }, []);
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setUser(null); // Clear user state
+      router.push("/"); // redirect after logout
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, handleLogout }}>
       {props.children}
     </UserContext.Provider>
   );
