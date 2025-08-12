@@ -3,7 +3,7 @@ import { currentUser } from "@/firebase/auth";
 
 export default function LoginPage() {
   return (
-    <main className="flex justify-center items-center min-h-screen p-6">
+    <main className="flex justify-center p-6">
       <LoginForm />
     </main>
   );

@@ -29,21 +29,23 @@ export default function UserPage() {
   };
 
   return (
-    <div className="flex flex-col w-full max-w-md p-6 md:p-8 lg:p-10 text-headline text-center">
-      <h2 className="text-xl font-semibold p-10">User Account</h2>
-      <div>
-        {user ? (
-          <>
-            <p>Email: {user.email}</p>
-            <p>UID: {user.uid}</p>
-          </>
-        ) : (
-          <p>No user found.</p>
-        )}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-background">
+      <div className="flex flex-col w-full max-w-md p-6 md:p-8 lg:p-10 text-headline text-center">
+        <h2 className="text-xl font-semibold p-10">User Account</h2>
+        <div>
+          {user ? (
+            <>
+              <p>Email: {user.email}</p>
+              <p>UID: {user.uid}</p>
+            </>
+          ) : (
+            <p>No user found.</p>
+          )}
+        </div>
       </div>
       <button
         onClick={handleLogout}
-        className="w-32 h-10 md:w-48 lg:w-60 lg:h-12 p-1 bg-button text-buttonText text-sm md:text-md lg:text-md rounded-md"
+        className="w-32 h-10 my-8 md:w-48 lg:w-60 lg:h-12 p-1 bg-button text-buttonText text-sm md:text-md lg:text-md rounded-md"
       >
         <span className="block md:hidden">Log Out</span>
         <span className="hidden md:block lg:block">Log Out</span>

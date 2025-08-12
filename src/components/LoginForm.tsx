@@ -26,15 +26,15 @@ export default function LoginForm() {
     window.location.href = "/userpage";
   };
 
-  console.log("This is that logged in user info by abel:", currentUser());
-  console.log("This typeof:", typeof currentUser());
+  // console.log("This is that logged in user info by abel:", currentUser());
+  // console.log("This typeof:", typeof currentUser());
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col w-full max-w-md p-6 md:p-8 lg:p-10 bg-#d1d1d1 rounded-xl border-2 border-stroke space-y-5"
+      className="flex flex-col w-full max-w-md p-8 my-8 md:p-8 lg:p-10 rounded-xl border-2 border-stroke space-y-5"
     >
-      <h2 className="text-xl font-semibold text-headline text-center">
+      <h2 className="text-xl font-semibold md:my-4 lg:my-6 text-headline text-center">
         Login to Your Account
       </h2>
 
