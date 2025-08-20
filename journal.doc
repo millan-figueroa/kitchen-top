@@ -1,0 +1,27 @@
+/* TODO:
+X Automatically scroll into view when new recipe is generated 
+X Loading spinner to let user know recipe is being fetched
+X Add simple email/ password login system
+- Print/ DL recipes
+- Regenerate different recipe w same ingredients (add function to getFromAI.ts to ask for different recipe)
+- Share recipes (social media/ access native)
+- Automatically modify/regenerate same recipe when user adds more ingredients
+- Google login
+- Clear all ingredients/ start over
+- Remove ingredients from the list
+- Add notes to recipes
+- User account with ability to save recipe */
+- format and standardize this journal. add/ fix dates.
+
+8/3 (fix date) Struggled with login/ auth. We kept trying to login but nothing would show up in userpage. AI gave us the run around. Ended the day with merge conflicts - main page was showing next.js boilerplate before we called it quits. 
+
+8/10 (fix date) M: Added logged in header and styles and fixed merge conflicts 
+
+8/12 Got a lot of stuff done: 
+-firebase auth
+-userContext
+-added buttons for download, renew, like, and share. 
+decided to research how to add functionality to each.
+-got logged in header to work
+
+8/19 We decided to start with download/print. Spent 3 hours trying to get html2canvas working. it doesn't work. next step, html2pdf or something else altogether. supposedly a lot of people have problems with html2canvas. 
