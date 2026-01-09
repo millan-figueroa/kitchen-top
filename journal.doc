@@ -12,6 +12,10 @@ X Add simple email/ password login system
 - Add notes to recipes
 - User account with ability to save recipe */
 - format and standardize this journal. add/ fix dates.
+- get rid of firebase and firebase auth
+- get new auth framework (appwrite, next/vercel, supabase)
+- figure out mvp and set timeline
+
 
 8/3 (fix date) Struggled with login/ auth. We kept trying to login but nothing would show up in userpage. AI gave us the run around. Ended the day with merge conflicts - main page was showing next.js boilerplate before we called it quits. 
 
