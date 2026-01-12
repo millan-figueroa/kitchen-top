@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 export const UserContext = createContext(null);
 
 const UserContextProvider = (props) => {
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState(false);
 	const router = useRouter();
 
 	useEffect(() => {
