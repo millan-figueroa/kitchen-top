@@ -1,7 +1,5 @@
 "use client";
 import { useUserContext } from "@/context/UserContext";
-import { useEffect, useState, useContext } from "react";
-import { UserContext } from "@/context/UserContext";
 
 export default function UserPage() {
   const { user, handleLogout } = useUserContext();

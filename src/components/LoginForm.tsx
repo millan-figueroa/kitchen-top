@@ -1,7 +1,6 @@
 import { useUserContext } from "@/context/UserContext";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { UserContext } from "@/context/UserContext";
 import Router from "next/router";
 
 type FormData = {

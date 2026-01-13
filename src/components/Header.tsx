@@ -1,9 +1,9 @@
 import { useUserContext } from "@/context/UserContext";
 import { Phudu } from "next/font/google";
 import { FaSignInAlt, FaUser } from "react-icons/fa";
-import { useEffect, useState, useContext } from "react";
+// import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
-import { UserContext } from "@/context/UserContext";
+// import { UserContext } from "@/context/UserContext";
 
 const phudu = Phudu({ weight: "600", subsets: ["latin"] });
 

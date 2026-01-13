@@ -47,7 +47,10 @@ const UserContextProvider = ({ children }: Props) => {
     }
   };
 
-  const value = useMemo(() => ({ user, setUser, handleLogout }), [user]);
+  const value = useMemo(
+    () => ({ user, setUser, handleLogout }),
+    [user, handleLogout]
+  );
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
