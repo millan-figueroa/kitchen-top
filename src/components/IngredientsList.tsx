@@ -1,3 +1,4 @@
+import { useUserContext } from "@/context/UserContext";
 import { UserContext } from "@/context/UserContext";
 import React, { JSX } from "react";
 import Router from "next/router";
@@ -27,7 +28,7 @@ export default function IngredientsList({
   setGetRecipeStatus,
 }: IngredientsListProps): JSX.Element {
   //get user from userContext
-  const { user } = React.useContext(UserContext);
+  const { user } = useUserContext();
   //check ingredients list update
   React.useEffect(() => {
     setGetRecipeStatus(false);

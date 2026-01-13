@@ -1,30 +1,55 @@
 "use client";
-import React, { createContext, useState, useEffect } from "react";
-import { useRouter } from "next/router";
 
-export const UserContext = createContext(null);
+import React, {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
+import { useRouter } from "next/navigation";
 
-const UserContextProvider = (props) => {
-	const [user, setUser] = useState(false);
-	const router = useRouter();
+type User = unknown; // TODO: replace with your real user shape later
 
-	useEffect(() => {
-		console.log("we are in here at the context level");
-	}, []);
+type UserContextValue = {
+  user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  handleLogout: () => Promise<void>;
+};
 
-	const handleLogout = async () => {
-		try {
-			console.log("You are logged out, sike!");
-		} catch (error) {
-			console.error("Logout failed:", error);
-		}
-	};
+export const UserContext = createContext<UserContextValue | undefined>(
+  undefined
+);
 
-	return (
-		<UserContext.Provider value={{ user, setUser, handleLogout }}>
-			{props.children}
-		</UserContext.Provider>
-	);
+export const useUserContext = () => {
+  //hook throws error if provider is missing
+  const ctx = useContext(UserContext);
+  if (!ctx)
+    throw new Error("useUserContext must be used within UserContextProvider");
+  return ctx;
+};
+
+type Props = {
+  children: ReactNode;
+};
+
+const UserContextProvider = ({ children }: Props) => {
+  const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      // Whatever "logout" means now that Firebase is removed:
+      setUser(null);
+      router.push("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
+  const value = useMemo(() => ({ user, setUser, handleLogout }), [user]);
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
 export default UserContextProvider;
