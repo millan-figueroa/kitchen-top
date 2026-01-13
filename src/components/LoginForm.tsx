@@ -1,6 +1,5 @@
-import { auth } from "@/firebase/config";
+import { useUserContext } from "@/context/UserContext";
 import { useState, useContext } from "react";
-import { signInUser, currentUser } from "@/firebase/auth";
 import Link from "next/link";
 import { UserContext } from "@/context/UserContext";
 import Router from "next/router";
@@ -12,7 +11,7 @@ type FormData = {
 
 export default function LoginForm() {
   //setUser after login in
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUserContext();
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -26,15 +25,9 @@ export default function LoginForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(formData);
-    signInUser(formData);
-    //update the user state in UserContext
-    setUser(currentUser());
     // Redirect to user page after login
     Router.push("/userpage");
   };
-
-  console.log("This is that logged in user info by abel:", currentUser());
-  console.log("This typeof:", typeof currentUser());
 
   return (
     <form

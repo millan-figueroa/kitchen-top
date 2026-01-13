@@ -1,16 +1,10 @@
 "use client";
+import { useUserContext } from "@/context/UserContext";
 import { useEffect, useState, useContext } from "react";
-import { auth } from "../firebase/config";
-import {
-  onAuthStateChanged,
-  signOut,
-  User as FirebaseUser,
-} from "firebase/auth";
-import { useRouter } from "next/navigation";
 import { UserContext } from "@/context/UserContext";
 
 export default function UserPage() {
-  const { user, handleLogout } = useContext(UserContext);
+  const { user, handleLogout } = useUserContext();
   // const [user, setUser] = useState<FirebaseUser | null>(null);
   // const router = useRouter();
 
@@ -37,8 +31,8 @@ export default function UserPage() {
         <div>
           {user ? (
             <>
-              <p>Email: {user.email}</p>
-              <p>UID: {user.uid}</p>
+              {/* <p>Email: {user.email}</p> */}
+              {/* <p>UID: {user.uid}</p> */}
             </>
           ) : (
             <p>No user found.</p>

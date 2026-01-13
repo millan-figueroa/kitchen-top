@@ -1,8 +1,7 @@
+import { useUserContext } from "@/context/UserContext";
 import { Phudu } from "next/font/google";
 import { FaSignInAlt, FaUser } from "react-icons/fa";
 import { useEffect, useState, useContext } from "react";
-import { auth } from "@/firebase/config";
-import { onAuthStateChanged, User } from "firebase/auth";
 import Link from "next/link";
 import { UserContext } from "@/context/UserContext";
 
@@ -16,7 +15,7 @@ export default function Header() {
   //   return () => unsubscribe();
   // }, []);
 
-  const { user } = useContext(UserContext);
+  const { user } = useUserContext();
 
   return (
     <div className="flex items-center justify-center w-full p-4 md:p-5 lg:p-6 bg-background border-b-2 border-stroke">

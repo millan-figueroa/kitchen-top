@@ -1,42 +1,55 @@
 "use client";
-import React, { createContext, useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { auth } from "../firebase/config";
-import {
-  onAuthStateChanged,
-  signOut,
-  User as FirebaseUser,
-} from "firebase/auth";
 
-export const UserContext = createContext(null);
+import React, {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
+import { useRouter } from "next/navigation";
 
-const UserContextProvider = (props) => {
-  const [user, setUser] = useState<FirebaseUser | null>(null);
+type User = unknown; // TODO: replace with your real user shape later
+
+type UserContextValue = {
+  user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  handleLogout: () => Promise<void>;
+};
+
+export const UserContext = createContext<UserContextValue | undefined>(
+  undefined
+);
+
+export const useUserContext = () => {
+  //hook throws error if provider is missing
+  const ctx = useContext(UserContext);
+  if (!ctx)
+    throw new Error("useUserContext must be used within UserContextProvider");
+  return ctx;
+};
+
+type Props = {
+  children: ReactNode;
+};
+
+const UserContextProvider = ({ children }: Props) => {
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      setUser(firebaseUser);
-      console.log("User state changed:", firebaseUser);
-    });
-    return () => unsubscribe();
-  }, []);
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
-      setUser(null); // Clear user state
-      router.push("/"); // redirect after logout
+      // Whatever "logout" means now that Firebase is removed:
+      setUser(null);
+      router.push("/");
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
 
-  return (
-    <UserContext.Provider value={{ user, setUser, handleLogout }}>
-      {props.children}
-    </UserContext.Provider>
-  );
+  const value = useMemo(() => ({ user, setUser, handleLogout }), [user]);
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
 export default UserContextProvider;
