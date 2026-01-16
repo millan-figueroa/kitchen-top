@@ -39,7 +39,6 @@ const UserContextProvider = ({ children }: Props) => {
 
   const handleLogout = async () => {
     try {
-      // Whatever "logout" means now that Firebase is removed:
       setUser(null);
       router.push("/");
     } catch (error) {

@@ -11,8 +11,6 @@ X Add simple email/ password login system
 - Remove ingredients from the list
 - Add notes to recipes
 - User account with ability to save recipe */
-- format and standardize this journal. add/ fix dates.
-- get rid of firebase and firebase auth
 - get new auth framework (appwrite, next/vercel, supabase)
 - figure out mvp and set timeline
 
@@ -22,7 +20,7 @@ X Add simple email/ password login system
 8/10 (fix date) M: Added logged in header and styles and fixed merge conflicts 
 
 8/12 Got a lot of stuff done: 
--firebase auth
+-fb auth
 -userContext
 -added buttons for download, renew, like, and share. 
 decided to research how to add functionality to each.
