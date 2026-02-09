@@ -1,5 +1,4 @@
 // This approach is taken from https://github.com/vercel/next.js/tree/canary/examples/with-mongodb
-import { connect } from "http2";
 import { MongoClient, ServerApiVersion } from "mongodb";
 
 if (!process.env.MONGODB_URI) {
