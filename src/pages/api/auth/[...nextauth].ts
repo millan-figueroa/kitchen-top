@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import client from "@/pages/libs/db";
+import bcrypt from "bcrypt"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
 	adapter: MongoDBAdapter(client),
@@ -12,15 +13,31 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials) {
-        const db = await client.connect();
-        const user = await db.collection('users').findOne({ username: credentials.username });
+        async authorize(credentials,req) {
+          
+            //credentials might be null
+            if (!credentials) {
+                throw new Error('Credentials are null')
+            }
+            //connect to mongo server
+            const clientDB = await client;
+            //specify the db in our case it in the URI
+            const db = clientDB.db()
+            //find the collection we need
+        const user = await db.collection('users').findOne({ email: credentials.email });
         
-        if (user && credentials.password === user.password) {
-          return { id: user._id, username: user.username };
-        } else {
-          throw new Error('Invalid username or password');
-        }
+            //if user exists
+            if (user && user.password) {
+                const isValid = await bcrypt.compare(credentials.password, user.password)
+                if (isValid) {
+                    //return the user object
+                    return { id: user._id.toString(), email: user.email };
+                }
+            } else {
+                throw new Error("Invalid Email/Password")
+            }
+            
+            return null
       },
     }),
   ],
