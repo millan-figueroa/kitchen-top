@@ -28,7 +28,7 @@ export default async function signup(req, res) {
 		//add user to the DB
 		const result = await db.collection("users").insertOne({
 			email,
-			hashedPassword, // Store the hashed password
+			password: hashedPassword, // Store the hashed password
 			createdAt: new Date(),
 		});
 
