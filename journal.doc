@@ -27,3 +27,22 @@ decided to research how to add functionality to each.
 -got logged in header to work
 
 8/19 We decided to start with download/print. Spent 3 hours trying to get html2canvas working. it doesn't work. next step, html2pdf or something else altogether. supposedly a lot of people have problems with html2canvas. 
+
+2 / 16: SignUp and SingIn Using NextAuth and MongoDB
+** Connect MongoDB / Configuration of email/password credentials:
+-- using this link [ https://authjs.dev/getting-started/adapters/mongodb ] copy the code in "ADD THE MONGODB CLIENT" into --> pages/libs/db.ts
+
+-- copy the CONFIGURATION code to --> pages/libs/auth.ts
+-- -- check the code in pages/libs/auth.ts to see the configuration of connecting an email/password credential provider
+-- -- notice and pay attention to the export default, [ it a must you have this code ]
+
+-- Create a Page Router for NextAuth
+-- -- pages/api/auth/[...authnext].ts
+-- -- -- in this page is where you will connect the authOptions to the nextauth to function when someone is sign in and singout.
+
+** Create a signUp route --> pages/api/signUp
+-- Create the logic to save a new user to a mongoDB
+
+** Typescript
+-- to customize what the Token types you will need to overwrite the default Typescript interface
+-- --  file at --> src/types/next.d.ts  is where you will need to update the types or replace the default types
