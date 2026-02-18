@@ -5,13 +5,17 @@ import Head from "next/head";
 import UserContextProvider from "@/context/UserContext";
 import { SessionProvider } from "next-auth/react";
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+	Component,
+	pageProps: { session, ...pageProps }, //session holds the session data and status
+}: AppProps) {
 	return (
 		<main className="min-h-screen bg-background">
 			<Head>
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			</Head>
-			<SessionProvider>
+			{/* enable to use useSession , session context need to be exposed; <SessionProvider />*/}
+			<SessionProvider session={session}>
 				<UserContextProvider>
 					<Header />
 					<Component {...pageProps} />
