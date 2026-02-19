@@ -1,21 +1,12 @@
-import { useUserContext } from "@/context/UserContext";
 import { Phudu } from "next/font/google";
 import { FaSignInAlt, FaUser } from "react-icons/fa";
-// import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
-// import { UserContext } from "@/context/UserContext";
 import { useSession } from "next-auth/react";
-
 const phudu = Phudu({ weight: "600", subsets: ["latin"] });
 
 export default function Header() {
-	// const [user, setUser] = useState<User | null>(null);
-
-	// useEffect(() => {
-	//   const unsubscribe = onAuthStateChanged(auth, setUser);
-	//   return () => unsubscribe();
-	// }, []);
-
+	//get session data
+	//get the data and rename it to session
 	const { data: session } = useSession();
 
 	return (
