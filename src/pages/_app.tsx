@@ -2,7 +2,6 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Header from "@/components/Header";
 import Head from "next/head";
-import UserContextProvider from "@/context/UserContext";
 import { SessionProvider } from "next-auth/react";
 
 export default function App({
@@ -16,10 +15,8 @@ export default function App({
 			</Head>
 			{/* enable to use useSession , session context need to be exposed; <SessionProvider />*/}
 			<SessionProvider session={session}>
-				<UserContextProvider>
-					<Header />
-					<Component {...pageProps} />
-				</UserContextProvider>
+				<Header />
+				<Component {...pageProps} />
 			</SessionProvider>
 		</main>
 	);
