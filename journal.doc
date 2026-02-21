@@ -40,9 +40,38 @@ decided to research how to add functionality to each.
 -- -- pages/api/auth/[...authnext].ts
 -- -- -- in this page is where you will connect the authOptions to the nextauth to function when someone is sign in and singout.
 
+-- How to sign in them in
+-- --   // Call the signIn function with the 'credentials' provider and user form data
+        const res = await signIn("credentials", {
+            email: formData.email,
+            password: formData.password,
+            redirect: true, // Set to true to redirect to a default or specified callbackUrl after sign-in
+            callbackUrl: "/", // Optional: URL to redirect to after success
+        });
+
 ** Create a signUp route --> pages/api/signUp
 -- Create the logic to save a new user to a mongoDB
 
 ** Typescript
 -- to customize what the Token types you will need to overwrite the default Typescript interface
 -- --  file at --> src/types/next.d.ts  is where you will need to update the types or replace the default types
+
+8/18
+-- To be able to use useSession first you'll need to expose the session context, <SessionProvider />, at the top level of your application 
+-- -- https://next-auth.js.org/getting-started/example
+-- Instances of useSession will then have access to the session data and status. 
+-- The <SessionProvider /> also takes care of keeping the session updated and synced between browser tabs and windows.
+
+8/20
+-- When using the Provider like Github, Google and so on and an ADAPTERS the data will be inserted auto, you just need to provide the structure of how to save it in the DB.
+-- in our example: return {
+					id: profile.id.toString(), // GitHub ID (string)
+					name: profile.name,
+					email: profile.email,
+					image: profile.avatar_url,
+					// Custom fields you want stored in MongoDB
+					username: profile.login,
+					githubId: profile.id,
+				};
+
+-- In JWT callback the id that is being set is the ID from the DB (MongoDB) and not from the profile object from PRovider.
