@@ -79,6 +79,13 @@ export default function LoginForm() {
 				Login
 			</button>
 
+			<button
+				type="button"
+				onClick={() => signIn("github")}
+				className="h-10 md:h-12 w-full bg-button text-buttonText text-sm md:text-md font-medium rounded-md hover:opacity-90 transition">
+				Github SignIn
+			</button>
+
 			<Link href="/signup">
 				<button className="h-10 md:h-12 w-full bg-button text-buttonText text-sm md:text-md font-medium rounded-md hover:opacity-90 transition">
 					Register
