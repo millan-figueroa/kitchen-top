@@ -1,5 +1,6 @@
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GitHubProvider from "next-auth/providers/github";
 import type { NextAuthOptions } from "next-auth";
 import client from "@/pages/libs/db";
 import bcrypt from "bcrypt";
@@ -53,6 +54,26 @@ export const authOptions: NextAuthOptions = {
 				return null;
 			},
 		}),
+
+		// Github Provider
+		GitHubProvider({
+			clientId: process.env.GITHUB_ID,
+			clientSecret: process.env.GITHUB_SECRET,
+
+			async profile(profile) {
+				console.log("This is a profile:", profile);
+
+				return {
+					id: profile.id.toString(), // GitHub ID (string)
+					name: profile.name,
+					email: profile.email,
+					image: profile.avatar_url,
+					// Custom fields you want stored in MongoDB
+					username: profile.login,
+					githubId: profile.id,
+				};
+			},
+		}),
 	],
 	session: {
 		// Set it as jwt instead of database
@@ -64,7 +85,7 @@ export const authOptions: NextAuthOptions = {
 	callbacks: {
 		async jwt({ token, user }) {
 			if (user) {
-				token.id = user.id;
+				token.id = user.id; //MongoDB _id (string)
 				token.email = user.email;
 			}
 			console.log("jwt is: ", token);
