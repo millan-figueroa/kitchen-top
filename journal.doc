@@ -56,13 +56,13 @@ decided to research how to add functionality to each.
 -- to customize what the Token types you will need to overwrite the default Typescript interface
 -- --  file at --> src/types/next.d.ts  is where you will need to update the types or replace the default types
 
-8/18
+2/18
 -- To be able to use useSession first you'll need to expose the session context, <SessionProvider />, at the top level of your application 
 -- -- https://next-auth.js.org/getting-started/example
 -- Instances of useSession will then have access to the session data and status. 
 -- The <SessionProvider /> also takes care of keeping the session updated and synced between browser tabs and windows.
 
-8/20
+2/20
 -- When using the Provider like Github, Google and so on and an ADAPTERS the data will be inserted auto, you just need to provide the structure of how to save it in the DB.
 -- in our example: return {
 					id: profile.id.toString(), // GitHub ID (string)
@@ -75,3 +75,13 @@ decided to research how to add functionality to each.
 				};
 
 -- In JWT callback the id that is being set is the ID from the DB (MongoDB) and not from the profile object from PRovider.
+
+2/13
+-- Managing Github SigIn to different account after logging out, Add the options below to the Github Provide
+-- --       clientId: process.env.GITHUB_ID!,
+			clientSecret: process.env.GITHUB_SECRET!,
+			authorization: {
+				params: {
+					prompt: "select_account", // Forces the account picker
+				},
+			},
