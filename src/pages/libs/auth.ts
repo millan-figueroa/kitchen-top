@@ -127,12 +127,12 @@ export const authOptions: NextAuthOptions = {
 		},
 		async session({ session, token }) {
 			// Send properties to the client, like an access_token and user id from a provider.
-			session.user.id = token.id as string;
-			session.user.email = token.email as string;
-			session.user.name = token.name as string;
-			session.user.image = token.image as string;
-			session.user.githubId = token.githubId as string; // GitHub ID (string)
-			session.user.googleId = token.googleId as string; // Google ID (string)
+			session.user.id = token.id;
+			session.user.email = token.email;
+			session.user.name = token.name;
+			session.user.image = token.image;
+			session.user.githubId = token.githubId; // GitHub ID (string)
+			session.user.googleId = token.googleId; // Google ID (string)
 			console.log(session, " is this");
 			return session;
 		},
