@@ -85,3 +85,21 @@ decided to research how to add functionality to each.
 					prompt: "select_account", // Forces the account picker
 				},
 			},
+
+2/28
+-- Adding customer USER Property, you need to update the `type/next-auth.d.ts` file with:
+-- -- 	...
+		// add custom data to the JWT token
+		interface User {
+			githubId?: string; // GitHub ID (string)
+			googleId?: string; // Google ID (string)
+		}
+		...
+
+-- MONGODB ACCOUNT COLLECTION
+-- MongoDb creates a Account Documents to keep track of all OAuth account and there origination.
+-- -- Detail info from web:
+-- -- -- This collection links a user's profile in the users collection to specific authentication providers (e.g., Google, GitHub). It stores provider-specific details like provider details, access_token, and user_id (which maps to the _id in the users collection). This design is crucial for:
+
+    Security: It helps prevent account hijacking by not automatically linking accounts between arbitrary providers unless an email address has been securely verified.
+    Multiple Sign-in Methods: It allows a single user to link multiple authentication methods (e.g., both a Google account and a GitHub account) to the same primary user profile.
