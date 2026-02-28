@@ -4,6 +4,7 @@ import GitHubProvider from "next-auth/providers/github";
 import type { NextAuthOptions } from "next-auth";
 import client from "@/pages/libs/db";
 import bcrypt from "bcrypt";
+import GoogleProvider from "next-auth/providers/google";
 
 //export these option to [...nextauth].ts
 export const authOptions: NextAuthOptions = {
@@ -79,7 +80,31 @@ export const authOptions: NextAuthOptions = {
 				};
 			},
 		}),
+
+		//google Provider
+		GoogleProvider({
+			clientId: process.env.GOOGLE_ID!,
+			clientSecret: process.env.GOOGLE_SECRET!,
+			authorization: {
+				params: {
+					prompt: "select_account", // Forces the account picker
+				},
+			},
+
+			async profile(profile) {
+				console.log("This is a profile:", profile);
+				return {
+					id: profile.sub, // Google ID (string)
+					name: profile.name,
+					email: profile.email,
+					image: profile.picture,
+					// Custom fields you want stored in MongoDB
+					googleId: profile.sub,
+				};
+			},
+		}),
 	],
+
 	session: {
 		// Set it as jwt instead of database
 		strategy: "jwt",
@@ -92,6 +117,10 @@ export const authOptions: NextAuthOptions = {
 			if (user) {
 				token.id = user.id; //MongoDB _id (string)
 				token.email = user.email;
+				token.name = user.name;
+				token.image = user.image;
+				token.githubId = user.githubId; // GitHub ID (string)
+				token.googleId = user.googleId; // Google ID (string)
 			}
 			console.log("jwt is: ", token);
 			return token;
@@ -100,6 +129,10 @@ export const authOptions: NextAuthOptions = {
 			// Send properties to the client, like an access_token and user id from a provider.
 			session.user.id = token.id as string;
 			session.user.email = token.email as string;
+			session.user.name = token.name as string;
+			session.user.image = token.image as string;
+			session.user.githubId = token.githubId as string; // GitHub ID (string)
+			session.user.googleId = token.googleId as string; // Google ID (string)
 			console.log(session, " is this");
 			return session;
 		},
