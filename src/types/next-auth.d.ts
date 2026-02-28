@@ -10,7 +10,16 @@ declare module "next-auth" {
 			/** The user's id and email to be save in session instance */
 			id?: string;
 			email?: string;
+			name?: string;
+			image?: string;
+			githubId?: string; // GitHub ID (string)
+			googleId?: string; // Google ID (string)
 		} & DefaultSession["user"];
+	}
+	// add custom data to the JWT token
+	interface User {
+		githubId?: string; // GitHub ID (string)
+		googleId?: string; // Google ID (string)
 	}
 }
 
