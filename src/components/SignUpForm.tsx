@@ -14,6 +14,8 @@ export default function SignUpForm() {
 		confirmPassword: "",
 	});
 
+	const [error, setError] = useState<string | "">("");
+
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setFormData((prev) => ({ ...prev, [name]: value }));
@@ -22,6 +24,9 @@ export default function SignUpForm() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		try {
 			e.preventDefault();
+			//remove the error message
+			setError("");
+			//check if the password and confirm password match
 			if (formData.password !== formData.confirmPassword) {
 				alert("Passwords do not match.");
 				return;
@@ -33,10 +38,14 @@ export default function SignUpForm() {
 				password: formData.password,
 			});
 			console.log(res.data);
-		} catch (err) {
-			console.log("error occurred:", err, (err as Error).message);
+		} catch (error) {
+			//check if the error is an AxiosError and has a response,
+			// then set the error message from the response, otherwise set a generic error message
+			if (axios.isAxiosError(error) && error.response) {
+				console.log("Hello");
+				setError(error.response.data.message);
+			} else setError(String(error));
 		}
-		console.log("You are sign in buddy!");
 	};
 
 	return (
@@ -46,6 +55,11 @@ export default function SignUpForm() {
 			<h2 className="text-xl font-semibold text-headline text-center">
 				Create an Account
 			</h2>
+			{error && (
+				<span className="text-red-600 text-center text-sm font-bold">
+					*{error}
+				</span>
+			)}
 
 			<input
 				name="email"
