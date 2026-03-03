@@ -53,6 +53,25 @@ export default function LoginForm() {
 				Login to Your Account
 			</h2>
 
+			<button
+				type="button"
+				onClick={() => signIn("github")}
+				className="h-10 md:h-12 w-full bg-button text-buttonText text-sm md:text-md font-medium rounded-md hover:opacity-90 transition">
+				Github SignIn
+			</button>
+			<button
+				type="button"
+				onClick={() => signIn("google")}
+				className="h-10 md:h-12 w-full bg-button text-buttonText text-sm md:text-md font-medium rounded-md hover:opacity-90 transition">
+				Google SignIn
+			</button>
+
+			<div className="flex items-center gap-4">
+				<div className="flex-grow border-t-2 border-stroke"></div>
+				<span className="text-sm text-headline">OR</span>
+				<div className="flex-grow border-t-2 border-stroke"></div>
+			</div>
+
 			<input
 				name="email"
 				type="email"
@@ -77,19 +96,6 @@ export default function LoginForm() {
 				type="submit"
 				className="h-10 md:h-12 w-full bg-button text-buttonText text-sm md:text-md font-medium rounded-md hover:opacity-90 transition">
 				Login
-			</button>
-
-			<button
-				type="button"
-				onClick={() => signIn("github")}
-				className="h-10 md:h-12 w-full bg-button text-buttonText text-sm md:text-md font-medium rounded-md hover:opacity-90 transition">
-				Github SignIn
-			</button>
-			<button
-				type="button"
-				onClick={() => signIn("google")}
-				className="h-10 md:h-12 w-full bg-button text-buttonText text-sm md:text-md font-medium rounded-md hover:opacity-90 transition">
-				Google SignIn
 			</button>
 
 			<Link href="/signup">
