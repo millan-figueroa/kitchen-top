@@ -55,13 +55,13 @@ export default function LoginForm() {
 
 			<button
 				type="button"
-				onClick={() => signIn("github")}
+				onClick={() => signIn("github", { callbackUrl: "/" })}
 				className="h-10 md:h-12 w-full bg-button text-buttonText text-sm md:text-md font-medium rounded-md hover:opacity-90 transition">
 				Github SignIn
 			</button>
 			<button
 				type="button"
-				onClick={() => signIn("google")}
+				onClick={() => signIn("google", { callbackUrl: "/" })}
 				className="h-10 md:h-12 w-full bg-button text-buttonText text-sm md:text-md font-medium rounded-md hover:opacity-90 transition">
 				Google SignIn
 			</button>
