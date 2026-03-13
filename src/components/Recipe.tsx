@@ -1,5 +1,4 @@
 import React, { JSX } from "react";
-import ReactMarkdown, { Components } from "react-markdown";
 
 type RecipeProps = {
 	recipe: string;
