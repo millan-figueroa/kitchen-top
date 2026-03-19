@@ -1,13 +1,10 @@
-import React, { JSX, useRef, useEffect, useContext } from "react";
+import React, { JSX, useEffect } from "react";
 import InputForm from "./InputForm";
 import Recipe from "./Recipe";
 import IngredientsList from "./IngredientsList";
 import { getRecipeFromAI } from "../../utils/getFromAI";
-import { UserContext } from "@/context/UserContext";
 
 export default function Main(): JSX.Element {
-	// Get user value from UserContext
-	// const { user } = useContext(UserContext);
 	const [ingredients, setIngredients] = React.useState<string[]>([]);
 	const [recipe, setRecipe] = React.useState<string>("");
 	const recipeSection = React.useRef<HTMLDivElement>(null);
