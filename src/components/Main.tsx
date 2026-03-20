@@ -3,10 +3,17 @@ import InputForm from "./InputForm";
 import Recipe from "./Recipe";
 import IngredientsList from "./IngredientsList";
 import { getRecipeFromAI } from "../../utils/getFromAI";
+import axios from "axios";
+
+interface Recipe {
+	title: string;
+	ingredients: string[];
+	instructions: string[];
+}
 
 export default function Main(): JSX.Element {
 	const [ingredients, setIngredients] = React.useState<string[]>([]);
-	const [recipe, setRecipe] = React.useState<string>("");
+	const [recipe, setRecipe] = React.useState<Recipe | null>(null);
 	const recipeSection = React.useRef<HTMLDivElement>(null);
 	const [loading, setLoading] = React.useState<boolean>(false);
 	//ingredient error message
@@ -31,9 +38,32 @@ export default function Main(): JSX.Element {
 		//show loading
 		setLoading(true);
 		const recipeJSON = await getRecipeFromAI(ingredients);
+		//turn the recipe string to JSON object and set it to state
+		const recipeObj = JSON.parse(recipeJSON);
+		setRecipe(recipeObj);
 		setLoading(false);
-		setRecipe(recipeJSON);
 		setGetRecipeStatus(true);
+	}
+
+	async function saveRecipe(user_id: string) {
+		try {
+			// if recipe is empty, throw an error
+			if (!recipe) {
+				throw new Error("No recipe to save");
+			}
+
+			const response = await axios.post("/api/save_recipe", {
+				user_id,
+				title: recipe.title,
+				instructions: [...recipe.instructions],
+				ingredients: [...recipe.ingredients],
+			});
+			console.log(response.data);
+			return response.data;
+		} catch (error) {
+			console.error("Error saving recipe:", error);
+			throw error;
+		}
 	}
 
 	// Scroll to the recipe section when the recipe is generated
@@ -88,6 +118,7 @@ export default function Main(): JSX.Element {
 						setIngredients={setIngredients}
 						getRecipeStatus={getRecipeStatus}
 						setGetRecipeStatus={setGetRecipeStatus}
+						saveRecipe={saveRecipe}
 					/>
 				) : null}
 			</div>
