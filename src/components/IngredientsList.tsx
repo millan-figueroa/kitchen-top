@@ -16,7 +16,7 @@ type IngredientsListProps = {
 	setRecipe: React.Dispatch<React.SetStateAction<string>>;
 	getRecipeStatus: boolean;
 	setGetRecipeStatus: React.Dispatch<React.SetStateAction<boolean>>;
-	saveRecipe: (user_id: string) => Promise<void>;
+	saveRecipe: (user_id: string) => Promise<{ success: string; error: string }>;
 };
 
 export default function IngredientsList({
@@ -37,6 +37,10 @@ export default function IngredientsList({
 	const { data } = useSession();
 	const user_id = data?.user?.id;
 
+	const [saveRecipeMessage, setSaveRecipeMessage] = React.useState<string>("");
+	const [error, setError] = React.useState(false);
+
+	//display the ingredients list and the get recipe button when user inputs more than 2 ingredients
 	const ingredientsListItems = ingredients.map((ingredient, index) => {
 		return (
 			<li key={index}>
@@ -51,6 +55,7 @@ export default function IngredientsList({
 		);
 	});
 
+	//function to remove ingredient from the list
 	const removeItem = (id: number) => {
 		let listIndex = 0;
 		//filter the list and remove the item
@@ -66,6 +71,19 @@ export default function IngredientsList({
 				return item;
 			}),
 		);
+	};
+
+	const saveRecipeHandler = async (user_id: string) => {
+		//clear the previous message when user click save recipe button
+		setSaveRecipeMessage("");
+		setError(false);
+		const afterSaveRecipeMessage = await saveRecipe(user_id);
+		if (afterSaveRecipeMessage.success) {
+			setSaveRecipeMessage(afterSaveRecipeMessage.success);
+		} else {
+			setError(true);
+			setSaveRecipeMessage(afterSaveRecipeMessage.error);
+		}
 	};
 
 	return (
@@ -135,7 +153,7 @@ export default function IngredientsList({
 								</button>
 							) : (
 								<button
-									onClick={() => saveRecipe(user_id)}
+									onClick={() => saveRecipeHandler(user_id)}
 									className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
 									<FaHeart className="block md:hidden w-3 h-4" />
 									<span className="hidden md:block text-sm md:text-md">
@@ -154,6 +172,15 @@ export default function IngredientsList({
 						</div>
 					</div>
 				))}
+			{/* display message after saving recipe */}
+			{saveRecipeMessage && (
+				<div
+					className={`mt-4 p-4 rounded-md text-center ${
+						error ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"
+					}`}>
+					{saveRecipeMessage}
+				</div>
+			)}
 		</div>
 	);
 }
