@@ -46,6 +46,9 @@ export default function Main(): JSX.Element {
 	}
 
 	async function saveRecipe(user_id: string) {
+		//message to return to the user after saving the recipe
+		const responseMessage = { success: "", error: "" };
+
 		try {
 			// if recipe is empty, throw an error
 			if (!recipe) {
@@ -58,11 +61,21 @@ export default function Main(): JSX.Element {
 				instructions: [...recipe.instructions],
 				ingredients: [...recipe.ingredients],
 			});
-			console.log(response.data);
-			return response.data;
+			//if successfully saved, return success message
+			if (response.status === 201) {
+				responseMessage.success = "Recipe saved successfully!";
+				return responseMessage;
+			}
 		} catch (error) {
-			console.error("Error saving recipe:", error);
-			throw error;
+			//check if the error is an AxiosError and has a response,
+			// then set the error message from the response, otherwise set a generic error message
+			if (axios.isAxiosError(error) && error?.response?.status === 422) {
+				responseMessage.error = error.response.data.message;
+				return responseMessage;
+			} else {
+				responseMessage.error = "Something went wrong saving your recipe";
+				return responseMessage;
+			}
 		}
 	}
 
