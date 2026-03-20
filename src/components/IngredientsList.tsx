@@ -31,6 +31,8 @@ export default function IngredientsList({
 	//check ingredients list update
 	React.useEffect(() => {
 		setGetRecipeStatus(false);
+		setSaveRecipeMessage("");
+		setError(false);
 	}, [ingredients]);
 
 	//get current login user id
