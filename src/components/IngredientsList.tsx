@@ -7,6 +7,7 @@ import {
 	FaShareAlt,
 	FaHeart,
 } from "react-icons/fa";
+import { useSession } from "next-auth/react";
 
 type IngredientsListProps = {
 	ingredients: string[];
@@ -29,6 +30,11 @@ export default function IngredientsList({
 	React.useEffect(() => {
 		setGetRecipeStatus(false);
 	}, [ingredients]);
+
+	//get current login user id
+	const { data } = useSession();
+	const user_id = data?.user?.id;
+	const user_name = data?.user?.name;
 
 	const ingredientsListItems = ingredients.map((ingredient, index) => {
 		return (
@@ -116,7 +122,8 @@ export default function IngredientsList({
 									New Recipe
 								</span>
 							</button>
-							{!user || true ? (
+							{/* if user is login in display save button else login */}
+							{!user_id ? (
 								<button
 									onClick={() => Router.push("/login")}
 									className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
@@ -131,7 +138,7 @@ export default function IngredientsList({
 									className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
 									<FaHeart className="block md:hidden w-3 h-4" />
 									<span className="hidden md:block text-sm md:text-md">
-										Like
+										Save
 									</span>
 								</button>
 							)}
