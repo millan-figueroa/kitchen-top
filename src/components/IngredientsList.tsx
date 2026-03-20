@@ -16,6 +16,7 @@ type IngredientsListProps = {
 	setRecipe: React.Dispatch<React.SetStateAction<string>>;
 	getRecipeStatus: boolean;
 	setGetRecipeStatus: React.Dispatch<React.SetStateAction<boolean>>;
+	saveRecipe: (user_id: string) => Promise<void>;
 };
 
 export default function IngredientsList({
@@ -25,6 +26,7 @@ export default function IngredientsList({
 	setRecipe,
 	getRecipeStatus,
 	setGetRecipeStatus,
+	saveRecipe,
 }: IngredientsListProps): JSX.Element {
 	//check ingredients list update
 	React.useEffect(() => {
@@ -34,7 +36,6 @@ export default function IngredientsList({
 	//get current login user id
 	const { data } = useSession();
 	const user_id = data?.user?.id;
-	const user_name = data?.user?.name;
 
 	const ingredientsListItems = ingredients.map((ingredient, index) => {
 		return (
@@ -134,7 +135,7 @@ export default function IngredientsList({
 								</button>
 							) : (
 								<button
-									//   onClick={"Like"}
+									onClick={() => saveRecipe(user_id)}
 									className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
 									<FaHeart className="block md:hidden w-3 h-4" />
 									<span className="hidden md:block text-sm md:text-md">
