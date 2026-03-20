@@ -21,11 +21,11 @@ export default async function saveRecipe(req, res) {
 			.collection("recipes")
 			.findOne({ user_id, title, instructions });
 		if (existingRecipe) {
-			return res.status(400).json({ message: "Recipe already saved" });
+			return res.status(422).json({ message: "Recipe already saved" });
 		}
 
 		//add recipe to the DB
-		const result = await db.collection("recipes").insertOne({
+		await db.collection("recipes").insertOne({
 			user_id,
 			title,
 			instructions,
@@ -33,11 +33,11 @@ export default async function saveRecipe(req, res) {
 			createdAt: new Date(),
 		});
 
-		console.log("These are the results", result);
-
 		res.status(201).json({ message: "Recipe saved" });
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (error) {
-		res.status(500).json({ message: "Something went wrong" });
+		res
+			.status(500)
+			.json({ message: "Something went wrong saving your recipe" });
 	}
 }
