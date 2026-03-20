@@ -30,9 +30,9 @@ export default function Main(): JSX.Element {
 	async function getRecipe() {
 		//show loading
 		setLoading(true);
-		const recipeMarkdown = await getRecipeFromAI(ingredients);
+		const recipeJSON = await getRecipeFromAI(ingredients);
 		setLoading(false);
-		setRecipe(recipeMarkdown);
+		setRecipe(recipeJSON);
 		setGetRecipeStatus(true);
 	}
 
