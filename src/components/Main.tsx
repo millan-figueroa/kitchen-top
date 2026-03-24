@@ -1,15 +1,19 @@
-import React, { JSX, useRef, useEffect, useContext } from "react";
+import React, { JSX, useEffect } from "react";
 import InputForm from "./InputForm";
 import Recipe from "./Recipe";
 import IngredientsList from "./IngredientsList";
 import { getRecipeFromAI } from "../../utils/getFromAI";
-import { UserContext } from "@/context/UserContext";
+import axios from "axios";
+
+interface Recipe {
+	title: string;
+	ingredients: string[];
+	instructions: string[];
+}
 
 export default function Main(): JSX.Element {
-	// Get user value from UserContext
-	// const { user } = useContext(UserContext);
 	const [ingredients, setIngredients] = React.useState<string[]>([]);
-	const [recipe, setRecipe] = React.useState<string>("");
+	const [recipe, setRecipe] = React.useState<Recipe | null>(null);
 	const recipeSection = React.useRef<HTMLDivElement>(null);
 	const [loading, setLoading] = React.useState<boolean>(false);
 	//ingredient error message
@@ -33,10 +37,46 @@ export default function Main(): JSX.Element {
 	async function getRecipe() {
 		//show loading
 		setLoading(true);
-		const recipeMarkdown = await getRecipeFromAI(ingredients);
+		const recipeJSON = await getRecipeFromAI(ingredients);
+		//turn the recipe string to JSON object and set it to state
+		const recipeObj = JSON.parse(recipeJSON);
+		setRecipe(recipeObj);
 		setLoading(false);
-		setRecipe(recipeMarkdown);
 		setGetRecipeStatus(true);
+	}
+
+	async function saveRecipe(user_id: string) {
+		//message to return to the user after saving the recipe
+		const responseMessage = { success: "", error: "" };
+
+		try {
+			// if recipe is empty, throw an error
+			if (!recipe) {
+				throw new Error("No recipe to save");
+			}
+
+			const response = await axios.post("/api/save_recipe", {
+				user_id,
+				title: recipe.title,
+				instructions: [...recipe.instructions],
+				ingredients: [...recipe.ingredients],
+			});
+			//if successfully saved, return success message
+			if (response.status === 201) {
+				responseMessage.success = "Recipe saved successfully!";
+				return responseMessage;
+			}
+		} catch (error) {
+			//check if the error is an AxiosError and has a response,
+			// then set the error message from the response, otherwise set a generic error message
+			if (axios.isAxiosError(error) && error?.response?.status === 422) {
+				responseMessage.error = error.response.data.message;
+				return responseMessage;
+			} else {
+				responseMessage.error = "Something went wrong saving your recipe";
+				return responseMessage;
+			}
+		}
 	}
 
 	// Scroll to the recipe section when the recipe is generated
@@ -91,6 +131,7 @@ export default function Main(): JSX.Element {
 						setIngredients={setIngredients}
 						getRecipeStatus={getRecipeStatus}
 						setGetRecipeStatus={setGetRecipeStatus}
+						saveRecipe={saveRecipe}
 					/>
 				) : null}
 			</div>
