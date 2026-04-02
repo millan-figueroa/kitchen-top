@@ -16,8 +16,11 @@ export default function Main(): JSX.Element {
 	const [recipe, setRecipe] = React.useState<Recipe | null>(null);
 	const recipeSection = React.useRef<HTMLDivElement>(null);
 	const [loading, setLoading] = React.useState<boolean>(false);
-	//ingredient error message
+	//ingredient error message for empty input
 	const [emptyInputError, setEmptyInputError] = React.useState<boolean>(false);
+	//ingredient error message for duplicate ingredient item
+	const [duplicateIngredientError, setDuplicateIngredientError] =
+		React.useState<boolean>(false);
 	//status of getRecipe function
 	const [getRecipeStatus, setGetRecipeStatus] = React.useState<boolean>(false);
 
@@ -25,12 +28,21 @@ export default function Main(): JSX.Element {
 	function addIngredient(formData: FormData): void {
 		const newIngredient = formData.get("ingredient") as string;
 		console.log(newIngredient);
+		//check if input is empty
 		if (newIngredient === "" || newIngredient.length === 0) {
 			setEmptyInputError(true);
 			return;
 		}
+
+		//check for duplicates ingredient items in the list, show error if it already exists
+		if (ingredients.includes(newIngredient)) {
+			setDuplicateIngredientError(true);
+			return;
+		}
+
 		setIngredients((prevIngredients) => [...prevIngredients, newIngredient]);
 		setEmptyInputError(false);
+		setDuplicateIngredientError(false);
 	}
 
 	//Function passed to IngredientsList component to fetch recipe from AI
@@ -118,6 +130,7 @@ export default function Main(): JSX.Element {
 				<InputForm
 					addIngredient={addIngredient}
 					emptyInputError={emptyInputError}
+					duplicateIngredientError={duplicateIngredientError}
 					// recipeSection={recipeSection}
 				/>
 
