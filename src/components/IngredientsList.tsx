@@ -7,6 +7,7 @@ import {
 	FaShareAlt,
 	FaHeart,
 } from "react-icons/fa";
+import { GiBroom } from "react-icons/gi";
 import { useSession } from "next-auth/react";
 
 type IngredientsListProps = {
@@ -75,6 +76,7 @@ export default function IngredientsList({
 		);
 	};
 
+	//function to handle save recipe button click, call the saveRecipe function and display the message after saving recipe
 	const saveRecipeHandler = async (user_id: string) => {
 		//clear the previous message when user click save recipe button
 		setSaveRecipeMessage("");
@@ -86,6 +88,13 @@ export default function IngredientsList({
 			setError(true);
 			setSaveRecipeMessage(afterSaveRecipeMessage.error);
 		}
+	};
+
+	//function to clear the ingredients list and the recipe when user click new recipe button
+	const clearIngredientsItems = () => {
+		//clear the ingredients list and the recipe
+		setIngredients([]);
+		setRecipe("");
 	};
 
 	return (
@@ -128,11 +137,12 @@ export default function IngredientsList({
 						</div> */}
 						<div className="flex gap-4">
 							<button
-								// onClick={"Download"}
+								onClick={clearIngredientsItems}
 								className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
-								<FaDownload className="block md:hidden w-3 h-4" />
+								{/* <FaDownload className="block md:hidden w-3 h-4" /> */}
+								<GiBroom className="block md:hidden w-3 h-4" />
 								<span className="hidden md:block text-sm md:text-md">
-									Download
+									Clear List
 								</span>
 							</button>
 							<button
