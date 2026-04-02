@@ -3,11 +3,13 @@ import React, { JSX } from "react";
 type InputFormProps = {
 	addIngredient: (formData: FormData) => void;
 	emptyInputError: boolean;
+	duplicateIngredientError: boolean;
 };
 
 export default function InputForm({
 	addIngredient,
 	emptyInputError,
+	duplicateIngredientError,
 }: InputFormProps): JSX.Element {
 	return (
 		<form
@@ -24,6 +26,11 @@ export default function InputForm({
 				{emptyInputError && (
 					<span className="text-red-500 mt-1 pl-2">
 						* Please input an ingredient
+					</span>
+				)}
+				{duplicateIngredientError && (
+					<span className="text-red-500 mt-1 pl-2">
+						* Ingredient already added
 					</span>
 				)}
 			</div>
