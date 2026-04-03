@@ -1,5 +1,7 @@
 "use client";
 import { signOut, useSession } from "next-auth/react";
+import { useEffect } from "react";
+import axios from "axios";
 
 export default function UserPage() {
 	const { data } = useSession();
@@ -10,6 +12,24 @@ export default function UserPage() {
 	const logOutHandle = () => {
 		signOut({ redirect: true, callbackUrl: "/" });
 	};
+
+	useEffect(() => {
+		//fetch users saved recipe
+		const fetchUserSavedRecipes = async () => {
+			try {
+				const res = await axios.get(`/api/get_user_saved_recipe/${id}`);
+				console.log(res);
+			} catch (error) {
+				console.log(error instanceof Error ? error.message : 'An error occurred');
+			}
+		};
+
+		if (id) {
+			fetchUserSavedRecipes();
+		} else {
+			window.location.href = "/";
+		}
+	});
 
 	return (
 		<div className="flex flex-col items-center justify-center min-h-screen bg-background">
