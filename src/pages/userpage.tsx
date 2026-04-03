@@ -2,9 +2,11 @@
 import { signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function UserPage() {
 	const { data } = useSession();
+	const router = useRouter();
 	const email = data?.user?.email || "";
 	const id = data?.user?.id || "";
 
@@ -20,14 +22,14 @@ export default function UserPage() {
 				const res = await axios.get(`/api/get_user_saved_recipe/${id}`);
 				console.log(res);
 			} catch (error) {
-				console.log(error instanceof Error ? error.message : 'An error occurred');
+				console.log(error);
 			}
 		};
 
 		if (id) {
 			fetchUserSavedRecipes();
 		} else {
-			window.location.href = "/";
+			router.push("/");
 		}
 	});
 
