@@ -103,3 +103,12 @@ decided to research how to add functionality to each.
 
     Security: It helps prevent account hijacking by not automatically linking accounts between arbitrary providers unless an email address has been securely verified.
     Multiple Sign-in Methods: It allows a single user to link multiple authentication methods (e.g., both a Google account and a GitHub account) to the same primary user profile.
+
+04/02 
+- FETCH USER RECIPE 
+-- 	Nextjs uses ` api/get_user_saved_recipe/[user_id] ` instead of ` api/get_user_saved_recipe/:user_id
+-- 	OBJECTID
+	-- 	To convert a object to be used as ObjectId
+		1. import Object from mongoDB
+		2 in the mongo db functionality use this `....findOne(_id : new ObjectId(the_id_in_the_query.toString()) making sure the id_variable is converted to string)
+
