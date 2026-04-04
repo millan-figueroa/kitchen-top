@@ -3,9 +3,10 @@ import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { FaRegTrashCan } from "react-icons/fa6";
 
 interface RecipeSaved {
-	recipe_id: string;
+	_id: string;
 	title: string;
 	ingredients: string[];
 	instructions: string[];
@@ -21,6 +22,8 @@ export default function UserPage() {
 	const router = useRouter();
 
 	const [savedRecipe, setSavedRecipe] = useState<RecipeSaved[]>([]);
+	//return a message after delection of a recipe
+	const [deleteMessage, setDeleteMessage] = useState<string>("");
 
 	//logging out
 	const logOutHandle = () => {
@@ -44,12 +47,41 @@ export default function UserPage() {
 		} else {
 			router.push("/");
 		}
-	});
+	}, [id]);
+
+	const deleteSavedRecipe = async (recipe_id: string) => {
+		try {
+			const res = await axios.delete(`/api/delete_saved_recipe/${recipe_id}`, {
+				params: { user_id: id },
+			});
+			// Remove the deleted recipe from the state
+			setSavedRecipe(savedRecipe.filter((recipe) => recipe._id !== recipe_id));
+			//update the delete message state to show the user which recipe is deleted
+			setDeleteMessage(res.data.message);
+
+			//delete the message after 5 seconds
+			setTimeout(() => {
+				setDeleteMessage("");
+			}, 5000);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	//display user's saved recipes
 	const displaySavedRecipes = savedRecipe.map((recipe) => (
-		<div key={recipe.recipe_id} className="border p-4 rounded-md mb-4">
-			<h3 className="text-lg font-semibold mb-2">{recipe.title}</h3>
+		<div
+			key={recipe._id}
+			id={recipe._id}
+			className="border p-4 rounded-md mb-4">
+			<div className="flex justify-between">
+				<h3 className="text-lg font-semibold mb-2">{recipe.title}</h3>
+				<button
+					onClick={() => deleteSavedRecipe(recipe._id)}
+					className="text-red-500 hover:text-red-700">
+					<FaRegTrashCan />
+				</button>
+			</div>
 			{/* Display ingredients */}
 			<ul className="text-left">
 				{recipe.ingredients.map((ingredient, index) => (
@@ -77,6 +109,13 @@ export default function UserPage() {
 								<p>UID: {id}</p>
 							</div>
 							<hr className="w-full border-stroke" />
+							{deleteMessage && (
+								<div
+									className="mt-4 p-4 rounded-md text-center bg-green-100 text-green-800
+									">
+									{deleteMessage}
+								</div>
+							)}
 							<div className="w-2/3">{displaySavedRecipes}</div>
 						</section>
 					) : (

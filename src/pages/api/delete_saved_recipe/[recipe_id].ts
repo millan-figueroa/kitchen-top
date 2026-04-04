@@ -14,8 +14,7 @@ export default async function deleteUserSavedRecipe(req, res) {
 		const db = clientPromise.db();
 
 		//get dynamic route param
-		const { recipe_id } = req.query;
-		const { user_id } = req.query;
+		const { recipe_id, user_id } = req.query;
 
 		//check if recipe exists in the DB
 		//checking if the recipe exists and belongs to the user making the request using recipe_id and user_id
@@ -34,7 +33,9 @@ export default async function deleteUserSavedRecipe(req, res) {
 			.collection("recipes")
 			.deleteOne({ _id: new ObjectId(recipe_id.toString()) });
 
-		res.status(204).json({ message: "Recipe deleted" });
+		console.log(existRecipe.title);
+
+		res.status(200).json({ message: `${existRecipe.title} recipe is deleted` });
 
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (error) {
