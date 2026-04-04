@@ -112,3 +112,13 @@ decided to research how to add functionality to each.
 		1. import Object from mongoDB
 		2 in the mongo db functionality use this `....findOne(_id : new ObjectId(the_id_in_the_query.toString()) making sure the id_variable is converted to string)
 
+
+04/03 
+- NEXT SERVER ROUTE
+-- an api like that is saved in server side `api/delete_saved_recipe/[recipe_id].ts` will always call the ` export default function `
+-- That is a to go to function, you can have helpers but only the `expoert default function` will be called
+
+- AXIOS DELETE
+-- when you call axios.delete and in the body you used:
+	-- "params" this will result to extracting it using req.query
+	-- "body" this will result in extracting it using req.body
