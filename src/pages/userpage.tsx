@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { FaRegTrashCan } from "react-icons/fa6";
+import ModalPopUp from "@/components/ModalPopUp";
 
 interface RecipeSaved {
 	_id: string;
@@ -17,6 +18,10 @@ export default function UserPage() {
 	const { data } = useSession();
 	const email = data?.user?.email || "";
 	const id = data?.user?.id || "";
+
+	//modal pop up state
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedRecipeId, setSelectedRecipeId] = useState<string | null>(null);
 
 	//routing obj
 	const router = useRouter();
@@ -77,7 +82,10 @@ export default function UserPage() {
 			<div className="flex justify-between">
 				<h3 className="text-lg font-semibold mb-2">{recipe.title}</h3>
 				<button
-					onClick={() => deleteSavedRecipe(recipe._id)}
+					onClick={() => {
+						setSelectedRecipeId(recipe._id);
+						setIsModalOpen(true);
+					}}
 					className="text-red-500 hover:text-red-700">
 					<FaRegTrashCan />
 				</button>
@@ -99,6 +107,32 @@ export default function UserPage() {
 
 	return (
 		<div className="flex flex-col items-center justify-center min-h-screen bg-background">
+			{isModalOpen && (
+				<ModalPopUp isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+					<>
+						<p>Are you sure you want to delete this recipe?</p>
+						<div className="flex justify-end mt-4 gap-2">
+							<button
+								onClick={() => setIsModalOpen(false)}
+								className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400">
+								Cancel
+							</button>
+							<button
+								onClick={() => {
+									// Perform delete action here
+									if (selectedRecipeId) {
+										deleteSavedRecipe(selectedRecipeId);
+									}
+									setIsModalOpen(false);
+								}}
+								className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
+								Delete
+							</button>
+						</div>
+					</>
+				</ModalPopUp>
+			)}
+
 			<div className="flex flex-col w-full max-w-md p-6 md:p-8 lg:p-10 text-headline text-center">
 				<h2 className="text-xl font-semibold p-10">User Account</h2>
 				<div>
