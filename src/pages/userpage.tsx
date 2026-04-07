@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { FaRegTrashCan } from "react-icons/fa6";
+import ModalPopUp from "@/components/ModalPopUp";
+import DeletePopUp from "@/components/modal/DeletePopUp";
 
 interface RecipeSaved {
 	_id: string;
@@ -17,6 +19,10 @@ export default function UserPage() {
 	const { data } = useSession();
 	const email = data?.user?.email || "";
 	const id = data?.user?.id || "";
+
+	//modal pop up state
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedRecipeId, setSelectedRecipeId] = useState<string | null>(null);
 
 	//routing obj
 	const router = useRouter();
@@ -77,7 +83,10 @@ export default function UserPage() {
 			<div className="flex justify-between">
 				<h3 className="text-lg font-semibold mb-2">{recipe.title}</h3>
 				<button
-					onClick={() => deleteSavedRecipe(recipe._id)}
+					onClick={() => {
+						setSelectedRecipeId(recipe._id);
+						setIsModalOpen(true);
+					}}
 					className="text-red-500 hover:text-red-700">
 					<FaRegTrashCan />
 				</button>
@@ -99,6 +108,18 @@ export default function UserPage() {
 
 	return (
 		<div className="flex flex-col items-center justify-center min-h-screen bg-background">
+			{/* popup for delete confirmation */}
+			{isModalOpen && (
+				<ModalPopUp isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+					<DeletePopUp
+						setIsModalOpen={setIsModalOpen}
+						selectedRecipeId={selectedRecipeId}
+						deleteSavedRecipe={deleteSavedRecipe}
+					/>
+				</ModalPopUp>
+			)}
+			{/* end of pop up delete confirmation */}
+
 			<div className="flex flex-col w-full max-w-md p-6 md:p-8 lg:p-10 text-headline text-center">
 				<h2 className="text-xl font-semibold p-10">User Account</h2>
 				<div>
