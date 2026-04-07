@@ -9,14 +9,13 @@ export default function Popup({ isOpen, onClose, children }: PopUpProps) {
 
 	return (
 		<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-			<div className="bg-white rounded-lg shadow-lg p-6 w-80 relative">
+			<div className=" bg-background rounded-lg shadow-lg p-6 w-100 relative text-headline flex flex-col gap-2">
 				<button
 					onClick={onClose}
-					className="absolute top-2 right-2 text-gray-500 hover:text-black">
+					className="absolute top-2 right-2 text-gray-500 hover:text-black mb-2 hover:cursor-pointer pb-3 font-bold">
 					✕
 				</button>
-
-				{children}
+				<div className="pt-4">{children}</div>
 			</div>
 		</div>
 	);
