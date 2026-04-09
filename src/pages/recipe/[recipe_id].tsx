@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import Recipe from "@/components/Recipe";
 
 interface RecipeSaved {
@@ -10,7 +10,12 @@ interface RecipeSaved {
 	instructions: string[];
 }
 
-export default function displaySingleRecipe() {
+interface MyErrorResponse {
+	message: string;
+	code: number;
+}
+
+export default function DisplaySingleRecipe() {
 	//get the rececipe id from the dynamic route
 	const router = useRouter();
 	const { recipe_id } = router.query;
@@ -18,20 +23,33 @@ export default function displaySingleRecipe() {
 	const [recipe, setRecipe] = useState<RecipeSaved | null>(null);
 	//loading state for the recipe data
 	const [loading, setLoading] = useState<boolean>(false);
+	//error state for fetching recipe data
+	const [error, setError] = useState<string>("");
 
 	useEffect(() => {
 		//fetch the recipe data using the recipe_id
 		const fetchRecipe = async () => {
 			try {
 				setLoading(true);
+				setError("");
 				const res = await axios.get(
 					`/api/get_single_saved_recipe/${recipe_id}`,
 				);
 				const data = res.data;
 				setRecipe(data);
-				setLoading(false);
 			} catch (error) {
-				console.log(error);
+				if (axios.isAxiosError(error)) {
+					const errResponse = error.response?.data as MyErrorResponse;
+					console.log(errResponse);
+					setError(
+						`${errResponse.message} (Code: ${errResponse.code})` ||
+							"An error occurred while fetching the recipe.",
+					);
+				} else {
+					setError("An unexpected error occurred.");
+				}
+			} finally {
+				setLoading(false);
 			}
 		};
 		fetchRecipe();
@@ -64,7 +82,7 @@ export default function displaySingleRecipe() {
 
 	return (
 		<main className="flex flex-col justify-center items-center">
-			{/* Recipe suggestion */}
+			{error && !recipe && <p className="text-red-500 mt-10">{error}</p>}
 			{loading ? (
 				displayLoading()
 			) : (
