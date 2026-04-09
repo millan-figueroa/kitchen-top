@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { FaRegTrashCan } from "react-icons/fa6";
 import ModalPopUp from "@/components/ModalPopUp";
 import DeletePopUp from "@/components/modal/DeletePopUp";
+import Link from "next/link";
 
 interface RecipeSaved {
 	_id: string;
@@ -28,7 +29,7 @@ export default function UserPage() {
 	const router = useRouter();
 
 	const [savedRecipe, setSavedRecipe] = useState<RecipeSaved[]>([]);
-	//return a message after delection of a recipe
+	//return a message after detection of a recipe
 	const [deleteMessage, setDeleteMessage] = useState<string>("");
 
 	//logging out
@@ -81,7 +82,11 @@ export default function UserPage() {
 			id={recipe._id}
 			className="border p-4 rounded-md mb-4">
 			<div className="flex justify-between">
-				<h3 className="text-lg font-semibold mb-2">{recipe.title}</h3>
+				<Link href={`/recipe/${recipe._id}`}>
+					<h3 className="text-lg font-semibold mb-2 hover:text-blue-600 hover:cursor-pointer">
+						{recipe.title}
+					</h3>
+				</Link>
 				<button
 					onClick={() => {
 						setSelectedRecipeId(recipe._id);
