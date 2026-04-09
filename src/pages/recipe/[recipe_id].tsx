@@ -1,13 +1,17 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import axios, { isAxiosError } from "axios";
+import axios from "axios";
 import Recipe from "@/components/Recipe";
+import { useSession } from "next-auth/react";
+import { FaShareAlt } from "react-icons/fa";
+import { FaRegTrashCan } from "react-icons/fa6";
 
 interface RecipeSaved {
-	_id: string;
+	id: string;
 	title: string;
 	ingredients: string[];
 	instructions: string[];
+	user_id: string;
 }
 
 interface MyErrorResponse {
@@ -19,10 +23,17 @@ export default function DisplaySingleRecipe() {
 	//get the rececipe id from the dynamic route
 	const router = useRouter();
 	const { recipe_id } = router.query;
+
+	//get user session data
+	const { data } = useSession();
+	const id = data?.user?.id || "";
+
 	//variable to save the receipe data
 	const [recipe, setRecipe] = useState<RecipeSaved | null>(null);
+
 	//loading state for the recipe data
 	const [loading, setLoading] = useState<boolean>(false);
+
 	//error state for fetching recipe data
 	const [error, setError] = useState<string>("");
 
@@ -80,13 +91,58 @@ export default function DisplaySingleRecipe() {
 		);
 	};
 
+	//the owner of the recipe can delete the recipe, this is the function to handle delete recipe button click, call the delete recipe API and display the message after deleting recipe
+	const deleteSavedRecipe = async (recipe_id: string) => {
+		try {
+			const res = await axios.delete(`/api/delete_saved_recipe/${recipe_id}`, {
+				params: { user_id: id },
+			});
+
+			if (res.status === 200) {
+				setRecipe(null); // Clear the recipe from state after deletion
+				router.push("/userpage"); // Redirect to user page after deletion
+			}
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				const errResponse = error.response?.data as MyErrorResponse;
+				console.log(errResponse);
+				setError(
+					`${errResponse.message} (Code: ${errResponse.code})` ||
+						"An error occurred while fetching the recipe.",
+				);
+			} else {
+				setError("An unexpected error occurred.");
+			}
+		}
+	};
+
 	return (
 		<main className="flex flex-col justify-center items-center">
 			{error && !recipe && <p className="text-red-500 mt-10">{error}</p>}
 			{loading ? (
 				displayLoading()
 			) : (
-				<div>{recipe && <Recipe recipe={recipe} />}</div>
+				<div>
+					<div className="flex gap-4 py-2 md:py-4 justify-end">
+						{recipe && recipe.user_id === id && (
+							<button
+								onClick={() => deleteSavedRecipe(recipe.id)}
+								className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
+								<FaRegTrashCan className="block md:hidden w-3 h-4" />
+								<span className="hidden md:block text-sm md:text-md">
+									Delete
+								</span>
+							</button>
+						)}
+						<button
+							// onClick={"Regnerate"}
+							className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
+							<FaShareAlt className="block md:hidden w-3 h-4" />
+							<span className="hidden md:block text-sm md:text-md">Share</span>
+						</button>
+					</div>
+					<div>{recipe && <Recipe recipe={recipe} />}</div>
+				</div>
 			)}
 		</main>
 	);
