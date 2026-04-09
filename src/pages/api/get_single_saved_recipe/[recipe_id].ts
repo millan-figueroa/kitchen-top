@@ -23,7 +23,9 @@ export default async function displaySavedRecipe(req, res) {
 			.findOne({ _id: new ObjectId(recipe_id.toString()) });
 
 		if (!recipe) {
-			return res.status(404).json({ message: "Recipe was not found" });
+			return res
+				.status(404)
+				.json({ message: "Recipe was not found", code: 404 });
 		}
 
 		//recipe exist then return the recipe in JSON
@@ -36,8 +38,9 @@ export default async function displaySavedRecipe(req, res) {
 
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (error) {
-		res
-			.status(500)
-			.json({ message: "Something went wrong fetching your saved recipes" });
+		res.status(500).json({
+			message: "The recipe could not be fetched or no longer exists",
+			code: 500,
+		});
 	}
 }
