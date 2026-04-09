@@ -34,6 +34,7 @@ export default async function displaySavedRecipe(req, res) {
 			title: recipe.title,
 			ingredients: recipe.ingredients,
 			instructions: recipe.instructions,
+			user_id: recipe.user_id,
 		});
 
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
