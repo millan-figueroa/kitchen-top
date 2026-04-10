@@ -44,7 +44,6 @@ export default function SharePopUp() {
 				aria-label="Share on Bluesky">
 				<BlueskyIcon size={40} round />
 			</BlueskyShareButton>
-			;
 		</div>
 	);
 }
