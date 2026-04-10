@@ -33,6 +33,7 @@ export default function DisplaySingleRecipe() {
 
 	//modal pop up state
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	// another state to ensure right modal is popping up
 	const [openDeleteModal, setOpenDeleteModal] = useState(false);
 	const [openShareModal, setOpenShareModal] = useState(false);
 
