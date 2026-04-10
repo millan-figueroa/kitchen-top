@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Recipe from "@/components/Recipe";
 import { useSession } from "next-auth/react";
-import { FaShareAlt } from "react-icons/fa";
-import { FaRegTrashCan } from "react-icons/fa6";
+import { FaRegTrashCan, FaShareNodes } from "react-icons/fa6";
 import ModalPopUp from "@/components/ModalPopUp";
 import DeletePopUp from "@/components/modal/DeletePopUp";
 import SharePopUp from "@/components/modal/SharePopUp";
@@ -128,8 +127,6 @@ export default function DisplaySingleRecipe() {
 	return (
 		<main className="flex flex-col justify-center items-center">
 			{error && !recipe && <p className="text-red-500 mt-10">{error}</p>}
-			{/* testing the share button */}
-			<SharePopUp />
 			{loading ? (
 				displayLoading()
 			) : (
@@ -184,7 +181,7 @@ export default function DisplaySingleRecipe() {
 								setOpenDeleteModal(false);
 							}}
 							className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
-							<FaShareAlt className="block md:hidden w-3 h-4" />
+							<FaShareNodes className="block md:hidden w-3 h-4" />
 							<span className="hidden md:block text-sm md:text-md">Share</span>
 						</button>
 					</div>
