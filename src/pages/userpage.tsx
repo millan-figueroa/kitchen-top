@@ -3,10 +3,11 @@ import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { FaRegTrashCan } from "react-icons/fa6";
+import { FaRegTrashCan, FaShareNodes } from "react-icons/fa6";
 import ModalPopUp from "@/components/ModalPopUp";
 import DeletePopUp from "@/components/modal/DeletePopUp";
 import Link from "next/link";
+import SharePopUp from "@/components/modal/SharePopUp";
 
 interface RecipeSaved {
 	_id: string;
@@ -24,6 +25,10 @@ export default function UserPage() {
 	//modal pop up state
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedRecipeId, setSelectedRecipeId] = useState<string | null>(null);
+
+	// another state to ensure right modal is popping up
+	const [openDeleteModal, setOpenDeleteModal] = useState(false);
+	const [openShareModal, setOpenShareModal] = useState(false);
 
 	//routing obj
 	const router = useRouter();
@@ -56,6 +61,7 @@ export default function UserPage() {
 		}
 	}, [id]);
 
+	//delete a saved recipe
 	const deleteSavedRecipe = async (recipe_id: string) => {
 		try {
 			const res = await axios.delete(`/api/delete_saved_recipe/${recipe_id}`, {
@@ -91,9 +97,21 @@ export default function UserPage() {
 					onClick={() => {
 						setSelectedRecipeId(recipe._id);
 						setIsModalOpen(true);
+						setOpenDeleteModal(true);
+						setOpenShareModal(false);
 					}}
 					className="text-red-500 hover:text-red-700">
 					<FaRegTrashCan />
+				</button>
+				<button
+					onClick={() => {
+						setSelectedRecipeId(recipe._id);
+						setIsModalOpen(true);
+						setOpenDeleteModal(false);
+						setOpenShareModal(true);
+					}}
+					className="text-red-500 hover:text-red-700">
+					<FaShareNodes />
 				</button>
 			</div>
 			{/* Display ingredients */}
@@ -114,13 +132,30 @@ export default function UserPage() {
 	return (
 		<div className="flex flex-col items-center justify-center min-h-screen bg-background">
 			{/* popup for delete confirmation */}
-			{isModalOpen && (
-				<ModalPopUp isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+			{isModalOpen && openDeleteModal && (
+				<ModalPopUp
+					isOpen={isModalOpen}
+					onClose={() => {
+						setIsModalOpen(false);
+						setOpenDeleteModal(false);
+					}}>
 					<DeletePopUp
 						setIsModalOpen={setIsModalOpen}
 						selectedRecipeId={selectedRecipeId}
 						deleteSavedRecipe={deleteSavedRecipe}
 					/>
+				</ModalPopUp>
+			)}
+			{/* end of pop up delete confirmation */}
+			{/* popup for delete confirmation */}
+			{isModalOpen && openShareModal && (
+				<ModalPopUp
+					isOpen={isModalOpen}
+					onClose={() => {
+						setIsModalOpen(false);
+						setOpenShareModal(false);
+					}}>
+					<SharePopUp selectedRecipeId={selectedRecipeId} />
 				</ModalPopUp>
 			)}
 			{/* end of pop up delete confirmation */}

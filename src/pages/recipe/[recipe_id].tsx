@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Recipe from "@/components/Recipe";
 import { useSession } from "next-auth/react";
-import { FaShareAlt } from "react-icons/fa";
-import { FaRegTrashCan } from "react-icons/fa6";
+import { FaRegTrashCan, FaShareNodes } from "react-icons/fa6";
 import ModalPopUp from "@/components/ModalPopUp";
 import DeletePopUp from "@/components/modal/DeletePopUp";
+import SharePopUp from "@/components/modal/SharePopUp";
 
 interface RecipeSaved {
 	id: string;
@@ -32,6 +32,9 @@ export default function DisplaySingleRecipe() {
 
 	//modal pop up state
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	// another state to ensure right modal is popping up
+	const [openDeleteModal, setOpenDeleteModal] = useState(false);
+	const [openShareModal, setOpenShareModal] = useState(false);
 
 	//variable to save the receipe data
 	const [recipe, setRecipe] = useState<RecipeSaved | null>(null);
@@ -129,10 +132,13 @@ export default function DisplaySingleRecipe() {
 			) : (
 				<div>
 					{/* popup for delete confirmation */}
-					{isModalOpen && (
+					{isModalOpen && openDeleteModal && (
 						<ModalPopUp
 							isOpen={isModalOpen}
-							onClose={() => setIsModalOpen(false)}>
+							onClose={() => {
+								setIsModalOpen(false);
+								setOpenDeleteModal(false);
+							}}>
 							<DeletePopUp
 								setIsModalOpen={setIsModalOpen}
 								selectedRecipeId={recipe ? recipe.id : null}
@@ -141,10 +147,26 @@ export default function DisplaySingleRecipe() {
 						</ModalPopUp>
 					)}
 					{/* end of pop up delete confirmation */}
+					{/* popup for delete confirmation */}
+					{isModalOpen && openShareModal && (
+						<ModalPopUp
+							isOpen={isModalOpen}
+							onClose={() => {
+								setIsModalOpen(false);
+								setOpenShareModal(false);
+							}}>
+							<SharePopUp />
+						</ModalPopUp>
+					)}
+					{/* end of pop up delete confirmation */}
 					<div className="flex gap-4 py-2 md:py-4 justify-end">
 						{recipe && recipe.user_id === id && (
 							<button
-								onClick={() => setIsModalOpen(true)}
+								onClick={() => {
+									setIsModalOpen(true);
+									setOpenDeleteModal(true);
+									setOpenShareModal(false);
+								}}
 								className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
 								<FaRegTrashCan className="block md:hidden w-3 h-4" />
 								<span className="hidden md:block text-sm md:text-md">
@@ -153,9 +175,13 @@ export default function DisplaySingleRecipe() {
 							</button>
 						)}
 						<button
-							// onClick={"Regnerate"}
+							onClick={() => {
+								setIsModalOpen(true);
+								setOpenShareModal(true);
+								setOpenDeleteModal(false);
+							}}
 							className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
-							<FaShareAlt className="block md:hidden w-3 h-4" />
+							<FaShareNodes className="block md:hidden w-3 h-4" />
 							<span className="hidden md:block text-sm md:text-md">Share</span>
 						</button>
 					</div>
