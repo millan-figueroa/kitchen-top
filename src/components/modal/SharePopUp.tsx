@@ -13,9 +13,24 @@ import {
 } from "react-share";
 import { BsFillClipboard2PlusFill } from "react-icons/bs";
 
-export default function SharePopUp() {
-	//check to see if the code is running in the browser (client side) before accessing window
-	const url = typeof window !== "undefined" ? window.location.href : "";
+type SharePopUpProps = {
+	selectedRecipeId?: string;
+};
+
+export default function SharePopUp({ selectedRecipeId }: SharePopUpProps) {
+	let url = "";
+
+	if (selectedRecipeId) {
+		// If a recipe is selected, build the URL using the host + recipe path
+		url = `${window.location.origin}/recipe/${selectedRecipeId}`;
+	} else {
+		// If no recipe is selected, safely get the current page URL (client-side only)
+		if (typeof window !== "undefined") {
+			url = window.location.href;
+		} else {
+			url = "";
+		}
+	}
 
 	const [copied, setCopied] = useState(false);
 

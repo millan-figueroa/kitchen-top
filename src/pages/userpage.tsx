@@ -61,6 +61,7 @@ export default function UserPage() {
 		}
 	}, [id]);
 
+	//delete a saved recipe
 	const deleteSavedRecipe = async (recipe_id: string) => {
 		try {
 			const res = await axios.delete(`/api/delete_saved_recipe/${recipe_id}`, {
@@ -154,7 +155,7 @@ export default function UserPage() {
 						setIsModalOpen(false);
 						setOpenShareModal(false);
 					}}>
-					<SharePopUp />
+					<SharePopUp selectedRecipeId={selectedRecipeId} />
 				</ModalPopUp>
 			)}
 			{/* end of pop up delete confirmation */}
