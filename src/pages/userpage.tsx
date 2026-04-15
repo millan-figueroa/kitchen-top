@@ -186,7 +186,11 @@ export default function UserPage() {
 								</div>
 							)}
 							{/* display user saved recipes */}
-							<div className="w-2/3">{displaySavedRecipes}</div>
+							{savedRecipe.length > 0 ? (
+								<div className="w-2/3">{displaySavedRecipes}</div>
+							) : (
+								<p>No saved recipes found.</p>
+							)}
 						</section>
 					) : (
 						<p>No user found.</p>
