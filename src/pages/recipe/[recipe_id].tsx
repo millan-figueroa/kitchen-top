@@ -40,6 +40,8 @@ export default function DisplaySingleRecipe({
 	const [openDeleteModal, setOpenDeleteModal] = useState(false);
 	const [openShareModal, setOpenShareModal] = useState(false);
 
+	const [deleteMessage, setDeleteMessage] = useState<string>("");
+
 	//the owner of the recipe can delete the recipe, this is the function to handle delete recipe button click, call the delete recipe API and display the message after deleting recipe
 	const deleteSavedRecipe = async (recipe_id: string) => {
 		try {
@@ -48,19 +50,18 @@ export default function DisplaySingleRecipe({
 			});
 
 			if (res.status === 200) {
-				setRecipe(null); // Clear the recipe from state after deletion
 				router.push("/userpage"); // Redirect to user page after deletion
 			}
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				const errResponse = error.response?.data as MyErrorResponse;
 				console.log(errResponse);
-				setError(
+				setDeleteMessage(
 					`${errResponse.message} (Code: ${errResponse.code})` ||
 						"An error occurred while fetching the recipe.",
 				);
 			} else {
-				setError("An unexpected error occurred.");
+				setDeleteMessage("An unexpected error occurred.");
 			}
 		}
 	};
@@ -78,6 +79,16 @@ export default function DisplaySingleRecipe({
 
 	return (
 		<main className="flex flex-col justify-center items-center">
+			{/* display error message if deleteMessage is not empty */}
+			{deleteMessage && (
+				<div
+					className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+					role="alert">
+					{deleteMessage}
+				</div>
+			)}
+
+			{/* display the recipe if recipe is not null */}
 			{recipe && (
 				<div>
 					{/* popup for delete confirmation */}
