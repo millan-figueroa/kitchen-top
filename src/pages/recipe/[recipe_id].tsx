@@ -191,3 +191,37 @@ export default function DisplaySingleRecipe() {
 		</main>
 	);
 }
+
+export async function getServerSideProps(context: any) {
+	const { recipe_id } = context.query;
+
+	try {
+		const res = await axios.get(
+			`http://localhost:3000/api/get_single_saved_recipe/${recipe_id}`,
+		);
+		const recipe = res.data;
+		// if no error occurs, return the recipe data as props to the page
+		return {
+			props: {
+				recipe,
+				error: false,
+			},
+		};
+	} catch (err) {
+		if (axios.isAxiosError(err)) {
+			//show 404 page if the status coe is 404,
+			if (err.response?.status === 404) {
+				return {
+					notFound: true,
+				};
+			}
+		}
+		//overwise, return the error message as props to the page to show the error message on the page
+		return {
+			props: {
+				recipe: null,
+				error: true,
+			},
+		};
+	}
+}
