@@ -71,7 +71,8 @@ export default function DisplaySingleRecipe({
 		return (
 			<div className="flex justify-center items-center h-[60vh]">
 				<p className="text-red-500 text-lg">
-					Something went wrong loading this recipe
+					Something went wrong loading this recipe, check url or the recipe may
+					no longer exist.
 				</p>
 			</div>
 		);
