@@ -42,6 +42,14 @@ export default function UserPage() {
 		signOut({ redirect: true, callbackUrl: "/" });
 	};
 
+	//if user is not logged in, redirect the to homepage
+	useEffect(() => {
+		if (!id) {
+			router.push("/");
+		}
+	}, [id]);
+
+	//fetch user's saved recipes when the component mounts or when the user ID changes
 	useEffect(() => {
 		//fetch users saved recipe
 		const fetchUserSavedRecipes = async () => {
@@ -177,6 +185,7 @@ export default function UserPage() {
 									{deleteMessage}
 								</div>
 							)}
+							{/* display user saved recipes */}
 							<div className="w-2/3">{displaySavedRecipes}</div>
 						</section>
 					) : (
