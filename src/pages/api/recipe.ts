@@ -69,7 +69,7 @@ export default async function handler(
 				{ role: "system", content: SYSTEM_PROMPT },
 				{
 					role: "user",
-					content: `I have ${ingredientsString}. Please give me a food recipe you'd recommend I make!`,
+					content: `I have ${ingredientsString}. Please give me a recipe you'd recommend I make!`,
 				},
 			],
 			max_tokens: 1024,
