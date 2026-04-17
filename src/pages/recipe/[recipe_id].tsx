@@ -22,13 +22,17 @@ interface DisplaySingleRecipeProps {
 	error: boolean;
 }
 
+type MyErrorResponse = {
+	message: string;
+	code: number;
+};
+
 export default function DisplaySingleRecipe({
 	recipe,
 	error,
 }: DisplaySingleRecipeProps) {
 	//get the rececipe id from the dynamic route
 	const router = useRouter();
-	const { recipe_id } = router.query;
 
 	//get user session data
 	const { data } = useSession();
