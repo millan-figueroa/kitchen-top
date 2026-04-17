@@ -37,7 +37,9 @@ export default function Recipe({ recipe }: RecipeProps): JSX.Element {
 					{/* <ReactMarkdown components={components}>{recipe}</ReactMarkdown> */}
 				</>
 			) : (
-				<p className="text-paragraph">No recipe found. Please try again.</p>
+				<p className="text-paragraph font-semibold text-xl text-center">
+					Turn the music up 🎵🎵 and let&apos;s get cooking 🍳🍽️😋🥠!
+				</p>
 			)}
 		</section>
 	);

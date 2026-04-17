@@ -42,6 +42,14 @@ export default function UserPage() {
 		signOut({ redirect: true, callbackUrl: "/" });
 	};
 
+	//if user is not logged in, redirect the to homepage
+	useEffect(() => {
+		if (!id) {
+			router.push("/");
+		}
+	}, [id]);
+
+	//fetch user's saved recipes when the component mounts or when the user ID changes
 	useEffect(() => {
 		//fetch users saved recipe
 		const fetchUserSavedRecipes = async () => {
@@ -155,7 +163,7 @@ export default function UserPage() {
 						setIsModalOpen(false);
 						setOpenShareModal(false);
 					}}>
-					<SharePopUp selectedRecipeId={selectedRecipeId} />
+					<SharePopUp selectedRecipeId={selectedRecipeId || undefined} />
 				</ModalPopUp>
 			)}
 			{/* end of pop up delete confirmation */}
@@ -177,7 +185,12 @@ export default function UserPage() {
 									{deleteMessage}
 								</div>
 							)}
-							<div className="w-2/3">{displaySavedRecipes}</div>
+							{/* display user saved recipes */}
+							{savedRecipe.length > 0 ? (
+								<div className="w-2/3">{displaySavedRecipes}</div>
+							) : (
+								<p>No saved recipes found.</p>
+							)}
 						</section>
 					) : (
 						<p>No user found.</p>
