@@ -4,6 +4,7 @@ import Recipe from "./Recipe";
 import IngredientsList from "./IngredientsList";
 import { getRecipeFromAI } from "../../utils/getFromAI";
 import axios from "axios";
+import { isValidJSON } from "../../utils/helperFunctions";
 
 interface Recipe {
 	title: string;
@@ -24,6 +25,9 @@ export default function Main(): JSX.Element {
 	//status of getRecipe function
 	const [getRecipeStatus, setGetRecipeStatus] = React.useState<boolean>(false);
 
+	//AI error message from getRecipe function
+	const [aiError, setAIError] = React.useState<string>("");
+
 	//Add new ingredient to the list
 	function addIngredient(formData: FormData): void {
 		const newIngredient = formData.get("ingredient") as string;
@@ -43,6 +47,7 @@ export default function Main(): JSX.Element {
 		setIngredients((prevIngredients) => [...prevIngredients, newIngredient]);
 		setEmptyInputError(false);
 		setDuplicateIngredientError(false);
+		setAIError("");
 	}
 
 	//Function passed to IngredientsList component to fetch recipe from AI
@@ -51,10 +56,19 @@ export default function Main(): JSX.Element {
 		setLoading(true);
 		const recipeJSON = await getRecipeFromAI(ingredients);
 		//turn the recipe string to JSON object and set it to state
+		if (!isValidJSON(recipeJSON)) {
+			console.error("Invalid JSON:", recipeJSON);
+			setAIError(
+				"Sorry, I couldn't generate a recipe with those ingredients. Please try again with different ingredients.",
+			);
+			setLoading(false);
+			return;
+		}
+
 		const recipeObj = JSON.parse(recipeJSON);
 		setRecipe(recipeObj);
-		setLoading(false);
 		setGetRecipeStatus(true);
+		setLoading(false);
 	}
 
 	async function saveRecipe(user_id: string) {
@@ -154,7 +168,15 @@ export default function Main(): JSX.Element {
 				displayLoading()
 			) : (
 				<div ref={recipeSection}>
-					<Recipe recipe={recipe} />
+					{aiError ? (
+						<div
+							className="mt-4 p-4 rounded-md text-center bg-red-100 text-red-800
+							">
+							{aiError}
+						</div>
+					) : (
+						<Recipe recipe={recipe} />
+					)}
 				</div>
 			)}
 		</main>
