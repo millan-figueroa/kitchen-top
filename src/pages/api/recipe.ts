@@ -77,6 +77,7 @@ export default async function handler(
 
 		const content = aiRes.choices?.[0]?.message?.content ?? "No recipe found.";
 		return res.status(200).json({ content });
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	} catch (err: any) {
 		console.error("HF API error:", err?.message ?? err);
 		return res.status(500).json({ error: err?.message ?? "Unknown error" });
