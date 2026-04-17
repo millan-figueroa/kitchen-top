@@ -14,7 +14,7 @@ import {
 import { BsFillClipboard2PlusFill } from "react-icons/bs";
 
 type SharePopUpProps = {
-	selectedRecipeId: string | null;
+	selectedRecipeId?: string;
 };
 
 export default function SharePopUp({ selectedRecipeId }: SharePopUpProps) {

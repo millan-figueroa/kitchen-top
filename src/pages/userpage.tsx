@@ -163,7 +163,7 @@ export default function UserPage() {
 						setIsModalOpen(false);
 						setOpenShareModal(false);
 					}}>
-					<SharePopUp selectedRecipeId={selectedRecipeId} />
+					<SharePopUp selectedRecipeId={selectedRecipeId || undefined} />
 				</ModalPopUp>
 			)}
 			{/* end of pop up delete confirmation */}
