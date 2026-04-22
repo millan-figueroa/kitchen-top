@@ -122,3 +122,20 @@ decided to research how to add functionality to each.
 -- when you call axios.delete and in the body you used:
 	-- "params" this will result to extracting it using req.query
 	-- "body" this will result in extracting it using req.body
+
+04/21
+- TWO ENVIRONMENTS
+-- Nextjs when run a project it run it in two environments: the SERVER and CLIENT side
+-- Our HTML2PDF file can only used in the client side and will cause a REFERENCE ERROR if run on the server side
+	-- In order to prevent this from happening with use what is called DYNAMIC IMPORTING
+	-- See `src/utils/helperFunctions/export2Pdf.ts` to see it in action.
+	-- It is a way to import a module on the client side or only when the user interact with it.
+
+04/22
+- DECLARING TYPES	
+-- Typescript allows you to declare module for you type.
+-- it extension will end with ***.d.ts
+-- Like any other module, you will be able to export it and this will automatically make it global available BUT one more step is needed.
+-- Last thing to do is include your new declare Typescript module to load you declaration in the `tsconfig.json file
+-- -- in the include object add the route to your declarations `"src/types/**/*.d.ts"`
+-- -- if you are to export a specific style by itself as in out position here, we will need to import it to whatever file we use.
