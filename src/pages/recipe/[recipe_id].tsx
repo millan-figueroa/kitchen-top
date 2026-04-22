@@ -9,6 +9,7 @@ import DeletePopUp from "@/components/modal/DeletePopUp";
 import SharePopUp from "@/components/modal/SharePopUp";
 import { GetServerSidePropsContext } from "next";
 import Script from "next/script";
+import { export2Pdf } from "../../../utils/helperFunctions";
 
 interface RecipeSaved {
 	id: string;
@@ -32,7 +33,7 @@ export default function DisplaySingleRecipe({
 	recipe,
 	error,
 }: DisplaySingleRecipeProps) {
-	//get the rececipe id from the dynamic route
+	//get the recipe id from the dynamic route
 	const router = useRouter();
 
 	//get user session data
@@ -48,24 +49,7 @@ export default function DisplaySingleRecipe({
 	const [deleteMessage, setDeleteMessage] = useState<string>("");
 
 	//ref
-	const pdfRef = useRef(null);
-
-	const export2Pdf = async () => {
-		if (!pdfRef.current) return;
-		// Dynamic import to prevent SSR issues
-		// this also ensures that html2pdf is only loaded when the user clicks the export button, improving initial load performance
-		// also make it only accessible in client side, since html2pdf relies on browser APIs that are not available during server-side rendering
-		const html2pdf = (await import("html2pdf.js")).default;
-		const opt = {
-			margin: 0,
-			filename: `${recipe ? recipe.title : "document"}.pdf`,
-			image: { type: "jpeg", quality: 0.98 },
-			html2canvas: { scale: 1 },
-			jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-		};
-
-		await html2pdf().from(pdfRef.current).set(opt).save();
-	};
+	const pdfRef = useRef<HTMLDivElement | null>(null);
 
 	//the owner of the recipe can delete the recipe, this is the function to handle delete recipe button click, call the delete recipe API and display the message after deleting recipe
 	const deleteSavedRecipe = async (recipe_id: string) => {
@@ -171,7 +155,11 @@ export default function DisplaySingleRecipe({
 							<span className="hidden md:block text-sm md:text-md">Share</span>
 						</button>
 						<button
-							onClick={export2Pdf}
+							onClick={
+								pdfRef.current
+									? () => export2Pdf(pdfRef, recipe?.title || "document")
+									: undefined
+							}
 							className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
 							<FaShareNodes className="block md:hidden w-3 h-4" />
 							<span className="hidden md:block text-sm md:text-md">
