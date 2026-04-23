@@ -26,6 +26,7 @@ type IngredientsListProps = {
 	saveRecipe: (
 		user_id: string,
 	) => Promise<{ success: string; error: string } | undefined>;
+	downloadRecipeAsPDF: () => void;
 };
 
 export default function IngredientsList({
@@ -36,6 +37,7 @@ export default function IngredientsList({
 	getRecipeStatus,
 	setGetRecipeStatus,
 	saveRecipe,
+	downloadRecipeAsPDF,
 }: IngredientsListProps): JSX.Element {
 	//check ingredients list update
 	React.useEffect(() => {
@@ -182,11 +184,11 @@ export default function IngredientsList({
 								</button>
 							)}
 							<button
-								// onClick={"Share"}
+								onClick={downloadRecipeAsPDF}
 								className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
 								<FaShareAlt className="block md:hidden w-3 h-4" />
 								<span className="hidden md:block text-sm md:text-md">
-									Share
+									Download
 								</span>
 							</button>
 						</div>
