@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 import Recipe from "@/components/Recipe";
 import { useSession } from "next-auth/react";
@@ -8,6 +8,8 @@ import ModalPopUp from "@/components/ModalPopUp";
 import DeletePopUp from "@/components/modal/DeletePopUp";
 import SharePopUp from "@/components/modal/SharePopUp";
 import { GetServerSidePropsContext } from "next";
+import Script from "next/script";
+import { export2Pdf } from "../../../utils/helperFunctions";
 
 interface RecipeSaved {
 	id: string;
@@ -31,7 +33,7 @@ export default function DisplaySingleRecipe({
 	recipe,
 	error,
 }: DisplaySingleRecipeProps) {
-	//get the rececipe id from the dynamic route
+	//get the recipe id from the dynamic route
 	const router = useRouter();
 
 	//get user session data
@@ -45,6 +47,9 @@ export default function DisplaySingleRecipe({
 	const [openShareModal, setOpenShareModal] = useState(false);
 
 	const [deleteMessage, setDeleteMessage] = useState<string>("");
+
+	//ref
+	const pdfRef = useRef<HTMLDivElement | null>(null);
 
 	//the owner of the recipe can delete the recipe, this is the function to handle delete recipe button click, call the delete recipe API and display the message after deleting recipe
 	const deleteSavedRecipe = async (recipe_id: string) => {
@@ -149,12 +154,28 @@ export default function DisplaySingleRecipe({
 							<FaShareNodes className="block md:hidden w-3 h-4" />
 							<span className="hidden md:block text-sm md:text-md">Share</span>
 						</button>
+						<button
+							onClick={
+								pdfRef.current
+									? () => export2Pdf(pdfRef, recipe?.title || "document")
+									: undefined
+							}
+							className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
+							<FaShareNodes className="block md:hidden w-3 h-4" />
+							<span className="hidden md:block text-sm md:text-md">
+								Export PDF
+							</span>
+						</button>
 					</div>
-					<div>
+					<div ref={pdfRef}>
 						<Recipe recipe={recipe} />
 					</div>
 				</div>
 			)}
+			<Script
+				src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"
+				strategy="afterInteractive"
+			/>
 		</main>
 	);
 }

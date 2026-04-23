@@ -4,20 +4,29 @@ import {
 	FaDownload,
 	FaRedo,
 	FaSignInAlt,
-	FaShareAlt,
+	// FaShareAlt,
 	FaHeart,
 } from "react-icons/fa";
 import { GiBroom } from "react-icons/gi";
 import { useSession } from "next-auth/react";
 
+interface Recipe {
+	title: string;
+	ingredients: string[];
+	instructions: string[];
+}
+
 type IngredientsListProps = {
 	ingredients: string[];
 	getRecipe: () => void;
 	setIngredients: React.Dispatch<React.SetStateAction<string[]>>;
-	setRecipe: React.Dispatch<React.SetStateAction<string>>;
+	setRecipe: React.Dispatch<React.SetStateAction<Recipe | null>>;
 	getRecipeStatus: boolean;
 	setGetRecipeStatus: React.Dispatch<React.SetStateAction<boolean>>;
-	saveRecipe: (user_id: string) => Promise<{ success: string; error: string }>;
+	saveRecipe: (
+		user_id: string,
+	) => Promise<{ success: string; error: string } | undefined>;
+	downloadRecipeAsPDF: () => void;
 };
 
 export default function IngredientsList({
@@ -28,6 +37,7 @@ export default function IngredientsList({
 	getRecipeStatus,
 	setGetRecipeStatus,
 	saveRecipe,
+	downloadRecipeAsPDF,
 }: IngredientsListProps): JSX.Element {
 	//check ingredients list update
 	React.useEffect(() => {
@@ -70,7 +80,7 @@ export default function IngredientsList({
 				}
 				listIndex++;
 				//delete the previous recipe due to removing ingredient
-				setRecipe("");
+				setRecipe(null);
 				return item;
 			}),
 		);
@@ -82,11 +92,14 @@ export default function IngredientsList({
 		setSaveRecipeMessage("");
 		setError(false);
 		const afterSaveRecipeMessage = await saveRecipe(user_id);
-		if (afterSaveRecipeMessage.success) {
+		if (afterSaveRecipeMessage && afterSaveRecipeMessage.success) {
 			setSaveRecipeMessage(afterSaveRecipeMessage.success);
-		} else {
+		} else if (afterSaveRecipeMessage) {
 			setError(true);
 			setSaveRecipeMessage(afterSaveRecipeMessage.error);
+		} else {
+			setError(true);
+			setSaveRecipeMessage("An error occurred while saving the recipe.");
 		}
 	};
 
@@ -94,7 +107,7 @@ export default function IngredientsList({
 	const clearIngredientsItems = () => {
 		//clear the ingredients list and the recipe
 		setIngredients([]);
-		setRecipe("");
+		setRecipe(null);
 	};
 
 	return (
@@ -174,11 +187,11 @@ export default function IngredientsList({
 								</button>
 							)}
 							<button
-								// onClick={"Share"}
+								onClick={downloadRecipeAsPDF}
 								className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
-								<FaShareAlt className="block md:hidden w-3 h-4" />
+								<FaDownload className="block md:hidden w-3 h-4" />
 								<span className="hidden md:block text-sm md:text-md">
-									Share
+									Download
 								</span>
 							</button>
 						</div>
