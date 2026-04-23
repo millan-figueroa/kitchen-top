@@ -10,14 +10,22 @@ import {
 import { GiBroom } from "react-icons/gi";
 import { useSession } from "next-auth/react";
 
+interface Recipe {
+	title: string;
+	ingredients: string[];
+	instructions: string[];
+}
+
 type IngredientsListProps = {
 	ingredients: string[];
 	getRecipe: () => void;
 	setIngredients: React.Dispatch<React.SetStateAction<string[]>>;
-	setRecipe: React.Dispatch<React.SetStateAction<string>>;
+	setRecipe: React.Dispatch<React.SetStateAction<Recipe | null>>;
 	getRecipeStatus: boolean;
 	setGetRecipeStatus: React.Dispatch<React.SetStateAction<boolean>>;
-	saveRecipe: (user_id: string) => Promise<{ success: string; error: string }>;
+	saveRecipe: (
+		user_id: string,
+	) => Promise<{ success: string; error: string } | undefined>;
 };
 
 export default function IngredientsList({
