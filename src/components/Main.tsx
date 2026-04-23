@@ -4,7 +4,7 @@ import Recipe from "./Recipe";
 import IngredientsList from "./IngredientsList";
 import { getRecipeFromAI } from "../../utils/getFromAI";
 import axios from "axios";
-import { isValidJSON } from "../../utils/helperFunctions";
+import { export2Pdf, isValidJSON } from "../../utils/helperFunctions";
 
 interface Recipe {
 	title: string;
@@ -112,6 +112,13 @@ export default function Main(): JSX.Element {
 		}
 	}, [recipe]);
 
+	const downloadRecipeAsPDF = () => {
+		if (recipeSection.current) {
+			// Call the export2Pdf function from helperFunctions and pass the ref and recipe title as filename
+			export2Pdf(recipeSection, recipe?.title || "recipe");
+		}
+	};
+
 	// this is to shoe the loading spinner
 	//it can be moved to util folder in the future
 	const displayLoading = () => {
@@ -159,6 +166,7 @@ export default function Main(): JSX.Element {
 						getRecipeStatus={getRecipeStatus}
 						setGetRecipeStatus={setGetRecipeStatus}
 						saveRecipe={saveRecipe}
+						downloadRecipeAsPDF={downloadRecipeAsPDF}
 					/>
 				) : null}
 			</div>
