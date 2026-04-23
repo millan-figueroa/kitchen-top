@@ -19,10 +19,10 @@ export const export2Pdf = async (
 	// also make it only accessible in client side, since html2pdf relies on browser APIs that are not available during server-side rendering
 	const html2pdf = (await import("html2pdf.js")).default;
 	const opt: Html2PdfOptions = {
-		margin: 0,
+		margin: 0.5,
 		filename: `${recipeName}.pdf`,
 		image: { type: "jpeg", quality: 0.98 },
-		html2canvas: { scale: 1 },
+		html2canvas: { scale: 2 },
 		jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
 	};
 
