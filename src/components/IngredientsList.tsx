@@ -4,7 +4,7 @@ import {
 	FaDownload,
 	FaRedo,
 	FaSignInAlt,
-	FaShareAlt,
+	// FaShareAlt,
 	FaHeart,
 } from "react-icons/fa";
 import { GiBroom } from "react-icons/gi";
@@ -80,7 +80,7 @@ export default function IngredientsList({
 				}
 				listIndex++;
 				//delete the previous recipe due to removing ingredient
-				setRecipe("");
+				setRecipe(null);
 				return item;
 			}),
 		);
@@ -92,11 +92,14 @@ export default function IngredientsList({
 		setSaveRecipeMessage("");
 		setError(false);
 		const afterSaveRecipeMessage = await saveRecipe(user_id);
-		if (afterSaveRecipeMessage.success) {
+		if (afterSaveRecipeMessage && afterSaveRecipeMessage.success) {
 			setSaveRecipeMessage(afterSaveRecipeMessage.success);
-		} else {
+		} else if (afterSaveRecipeMessage) {
 			setError(true);
 			setSaveRecipeMessage(afterSaveRecipeMessage.error);
+		} else {
+			setError(true);
+			setSaveRecipeMessage("An error occurred while saving the recipe.");
 		}
 	};
 
@@ -104,7 +107,7 @@ export default function IngredientsList({
 	const clearIngredientsItems = () => {
 		//clear the ingredients list and the recipe
 		setIngredients([]);
-		setRecipe("");
+		setRecipe(null);
 	};
 
 	return (
@@ -186,7 +189,7 @@ export default function IngredientsList({
 							<button
 								onClick={downloadRecipeAsPDF}
 								className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
-								<FaShareAlt className="block md:hidden w-3 h-4" />
+								<FaDownload className="block md:hidden w-3 h-4" />
 								<span className="hidden md:block text-sm md:text-md">
 									Download
 								</span>
