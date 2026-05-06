@@ -103,6 +103,11 @@ export default function LoginForm() {
 					Register
 				</button>
 			</Link>
+			<p className="text-sm text-headline text-center">
+				<Link href="/resetpassword" className="text-blue-500 hover:underline">
+					Forgot your password?
+				</Link>
+			</p>
 		</form>
 	);
 }
