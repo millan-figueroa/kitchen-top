@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function ResetEmailForm() {
+export default function ForgotPasswordForm() {
 	const [email, setEmail] = useState("");
 	return (
 		<form

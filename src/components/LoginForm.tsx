@@ -104,7 +104,7 @@ export default function LoginForm() {
 				</button>
 			</Link>
 			<p className="text-sm text-headline text-center">
-				<Link href="/resetemail" className="text-blue-500 hover:underline">
+				<Link href="/forgotpassword" className="text-blue-500 hover:underline">
 					Forgot your password?
 				</Link>
 			</p>
