@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function ResetForm() {
+export default function ResetEmailForm() {
 	const [email, setEmail] = useState("");
 	return (
 		<form
