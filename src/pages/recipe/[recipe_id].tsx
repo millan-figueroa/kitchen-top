@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import axios from "axios";
 import Recipe from "@/components/Recipe";
 import { useSession } from "next-auth/react";
-import { FaRegTrashCan, FaShareNodes } from "react-icons/fa6";
+import { FaRegTrashCan, FaShareNodes, FaDownload } from "react-icons/fa6";
 import ModalPopUp from "@/components/ModalPopUp";
 import DeletePopUp from "@/components/modal/DeletePopUp";
 import SharePopUp from "@/components/modal/SharePopUp";
@@ -161,7 +161,7 @@ export default function DisplaySingleRecipe({
 									: undefined
 							}
 							className="px-4 md:px-6 lg:px-8 py-2 md:py-4 bg-accent text-sm md:text-md lg:text-md text-tertiary rounded-md">
-							<FaShareNodes className="block md:hidden w-3 h-4" />
+							<FaDownload className="block md:hidden w-3 h-4" />
 							<span className="hidden md:block text-sm md:text-md">
 								Export PDF
 							</span>
