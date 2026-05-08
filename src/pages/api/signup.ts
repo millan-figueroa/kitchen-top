@@ -1,8 +1,12 @@
 // pages/api/signup.js
 import client from "../libs/db";
 import bcrypt from "bcrypt";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-export default async function signup(req, res) {
+export default async function signup(
+	req: NextApiRequest,
+	res: NextApiResponse,
+) {
 	if (req.method !== "POST") {
 		return res.status(405).end();
 	}
@@ -26,7 +30,7 @@ export default async function signup(req, res) {
 		const hashedPassword = await bcrypt.hash(password, 12);
 
 		//add user to the DB
-		const result = await db.collection("users").insertOne({
+		await db.collection("users").insertOne({
 			email,
 			password: hashedPassword, // Store the hashed password
 			createdAt: new Date(),
