@@ -33,7 +33,7 @@ export default async function RequestReset(
 
 		// Here you would generate a reset token
 		const token = jwt.sign(
-			{ userId: user._id },
+			{ userId: user._id.toHexString },
 			process.env.RESET_TOKEN_SECRET as string,
 			{ expiresIn: "15m" },
 		);
@@ -44,22 +44,30 @@ export default async function RequestReset(
 			.updateOne({ _id: user._id }, { $set: { passwordResetToken: token } });
 
 		//reset URL to be sent in the email
-		const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/reset-password?token=${token}`;
+		const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/resetpassword?token=${token}`;
 
 		// Here you would send the email with the reset URL
-		await transporter.sendMail({
-			from: `"Recipe App" <${process.env.SMTP_USER}>`,
-			to: email,
-			subject: "Reset Your Password",
-			html: `
+		await transporter.sendMail(
+			{
+				from: `"Kitchen Top Recipe App" <${process.env.SMTP_USER}>`,
+				to: email,
+				subject: "Reset Your Password",
+				html: `
                     <p>You requested a password reset.</p>
                     <p>Click the link below to reset your password:</p>
                     <a href="${resetUrl}">${resetUrl}</a>
                     <p>This link expires in 15 minutes.</p>
                 `,
-		});
+			},
+			(error, info) => {
+				if (error) {
+					return console.log("Error:", error);
+				}
+				console.log("Email sent:", info.response);
+			},
+		);
 
-		// Always return success message to prevent email enumeration
+		// return a success response (do NOT reveal if user exists or not)
 		return res.status(200).json({ message: "Reset link sent" });
 	} catch (error) {
 		console.error("Error in request reset:", error);
