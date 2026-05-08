@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 type FormData = {
 	email: string;
@@ -13,6 +14,8 @@ export default function SignUpForm() {
 		password: "",
 		confirmPassword: "",
 	});
+
+	const router = useRouter();
 
 	const [error, setError] = useState<string | "">("");
 
@@ -38,6 +41,8 @@ export default function SignUpForm() {
 				password: formData.password,
 			});
 			console.log(res.data);
+			//redirect to login page after successful registration
+			router.push("/login");
 		} catch (error) {
 			//check if the error is an AxiosError and has a response,
 			// then set the error message from the response, otherwise set a generic error message
