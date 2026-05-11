@@ -33,7 +33,7 @@ export default async function RequestReset(
 
 		// Here you would generate a reset token
 		const token = jwt.sign(
-			{ userId: user._id.toHexString },
+			{ userId: user._id },
 			process.env.RESET_TOKEN_SECRET as string,
 			{ expiresIn: "15m" },
 		);
