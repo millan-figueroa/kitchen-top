@@ -19,10 +19,10 @@ export default function ResetPasswordPage() {
 		// Verify the token by making a request to the backend
 		const verifyToken = async () => {
 			try {
-				const response = await axios.get(
-					`/api/password_reset/verify-reset?token=${token}`,
+				const res = await axios.get(
+					`/api/password_reset/verify_reset?token=${token}`,
 				);
-				setValidToken(response.data.valid);
+				setValidToken(res.data.valid);
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			} catch (error) {
 				setValidToken(false);
