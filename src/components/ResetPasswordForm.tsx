@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 type FormData = {
 	password: string;
@@ -7,12 +8,17 @@ type FormData = {
 };
 
 export default function ResetPasswordForm() {
+	//get the token from the query param to be sent off to the backend when resetting the password
+	const searchParams = useSearchParams();
+	const token = searchParams.get("token");
+
 	const [formData, setFormData] = useState<FormData>({
 		password: "",
 		confirmPassword: "",
 	});
 
 	const [error, setError] = useState<string | "">("");
+	const [successMessage, setSuccessMessage] = useState<string | "">("");
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -31,10 +37,12 @@ export default function ResetPasswordForm() {
 			}
 
 			//registering the user
-			const res = await axios.post("/api/resetpassword", {
+			const res = await axios.post("/api/password_reset/reset_password", {
 				password: formData.password,
+				token,
 			});
 			console.log(res.data);
+			setSuccessMessage(res.data.message);
 		} catch (error) {
 			//check if the error is an AxiosError and has a response,
 			// then set the error message from the response, otherwise set a generic error message
@@ -55,6 +63,12 @@ export default function ResetPasswordForm() {
 			{error && (
 				<span className="text-red-600 text-center text-sm font-bold">
 					*{error}
+				</span>
+			)}
+
+			{successMessage && (
+				<span className="text-green-600 text-center text-sm font-bold">
+					{successMessage}
 				</span>
 			)}
 
@@ -81,7 +95,7 @@ export default function ResetPasswordForm() {
 			<button
 				type="submit"
 				className="h-10 md:h-12 w-full bg-button text-buttonText text-sm md:text-md font-medium rounded-md hover:opacity-90 transition">
-				Sign Up
+				Reset Password
 			</button>
 		</form>
 	);
