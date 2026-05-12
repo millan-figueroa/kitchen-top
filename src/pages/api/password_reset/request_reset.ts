@@ -24,11 +24,28 @@ export default async function RequestReset(
 		//check if user with the email exists
 		const user = await db.collection("users").findOne({ email });
 
+		//if user not found, do NOT reveal that to the client for security reasons
 		if (!user) {
 			// Do NOT reveal if user exists
 			return res
 				.status(200)
 				.json({ message: "If that email exists, a reset link was sent" });
+		}
+
+		//check if user is sign up via third party
+		//google sign in users won't have a password and shouldn't be able to reset password
+		if (user.googleId) {
+			return res.status(400).json({
+				message:
+					"This email is registered via Google Sign-In. Please use that to log in.",
+			});
+		}
+		//github sign in users won't have a password and shouldn't be able to reset password
+		if (user.githubId) {
+			return res.status(400).json({
+				message:
+					"This email is registered via GitHub Sign-In. Please use that to log in.",
+			});
 		}
 
 		// Here you would generate a reset token
