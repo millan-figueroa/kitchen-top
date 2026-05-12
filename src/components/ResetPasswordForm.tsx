@@ -30,9 +30,16 @@ export default function ResetPasswordForm() {
 			e.preventDefault();
 			//remove the error message
 			setError("");
+
+			//check if passwrord is 8 character long
+			if (formData.password.length < 8) {
+				setError("Password must be at least 8 characters long.");
+				return;
+			}
+
 			//check if the password and confirm password match
 			if (formData.password !== formData.confirmPassword) {
-				alert("Passwords do not match.");
+				setError("Passwords do not match.");
 				return;
 			}
 

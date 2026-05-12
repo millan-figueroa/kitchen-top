@@ -29,9 +29,23 @@ export default function SignUpForm() {
 			e.preventDefault();
 			//remove the error message
 			setError("");
+
+			//check if email is valid using regex
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (!emailRegex.test(formData.email) || formData.email === "") {
+				setError("Please enter a valid email address.");
+				return;
+			}
+
+			//check to see if email is 8 character long
+			if (formData.password.length < 8) {
+				setError("Password must be at least 8 characters long.");
+				return;
+			}
+
 			//check if the password and confirm password match
 			if (formData.password !== formData.confirmPassword) {
-				alert("Passwords do not match.");
+				setError("Passwords do not match.");
 				return;
 			}
 

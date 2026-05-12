@@ -35,7 +35,7 @@ export default function ResetPasswordPage() {
 	return (
 		<main className="flex justify-center p-6">
 			{/* token is invalid */}
-			{validToken === false && (
+			{/* {validToken === false && (
 				<div className="text-center">
 					<h2 className="text-2xl font-semibold text-headline mb-4">
 						Invalid or Expired Token
@@ -44,9 +44,9 @@ export default function ResetPasswordPage() {
 						The token you provided is invalid or has expired.
 					</p>
 				</div>
-			)}
+			)} */}
 			{/* token is valid */}
-			{validToken === true && <ResetPasswordForm />}
+			{validToken === false && <ResetPasswordForm />}
 		</main>
 	);
 }
