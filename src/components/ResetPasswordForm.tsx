@@ -1,23 +1,24 @@
 import axios from "axios";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 
 type FormData = {
-	email: string;
 	password: string;
 	confirmPassword: string;
 };
 
-export default function SignUpForm() {
+export default function ResetPasswordForm() {
+	//get the token from the query param to be sent off to the backend when resetting the password
+	const searchParams = useSearchParams();
+	const token = searchParams.get("token");
+
 	const [formData, setFormData] = useState<FormData>({
-		email: "",
 		password: "",
 		confirmPassword: "",
 	});
 
-	const router = useRouter();
-
 	const [error, setError] = useState<string | "">("");
+	const [successMessage, setSuccessMessage] = useState<string | "">("");
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -30,14 +31,7 @@ export default function SignUpForm() {
 			//remove the error message
 			setError("");
 
-			//check if email is valid using regex
-			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-			if (!emailRegex.test(formData.email) || formData.email === "") {
-				setError("Please enter a valid email address.");
-				return;
-			}
-
-			//check to see if email is 8 character long
+			//check if passwrord is 8 character long
 			if (formData.password.length < 8) {
 				setError("Password must be at least 8 characters long.");
 				return;
@@ -50,13 +44,12 @@ export default function SignUpForm() {
 			}
 
 			//registering the user
-			const res = await axios.post("/api/signup", {
-				email: formData.email,
+			const res = await axios.post("/api/password_reset/reset_password", {
 				password: formData.password,
+				token,
 			});
 			console.log(res.data);
-			//redirect to login page after successful registration
-			router.push("/login");
+			setSuccessMessage(res.data.message);
 		} catch (error) {
 			//check if the error is an AxiosError and has a response,
 			// then set the error message from the response, otherwise set a generic error message
@@ -72,7 +65,7 @@ export default function SignUpForm() {
 			onSubmit={handleSubmit}
 			className="flex flex-col w-full max-w-md p-6 md:p-8 lg:p-10  rounded-xl border-2 border-stroke space-y-5">
 			<h2 className="text-xl font-semibold text-headline text-center">
-				Create an Account
+				Reset Password
 			</h2>
 			{error && (
 				<span className="text-red-600 text-center text-sm font-bold">
@@ -80,15 +73,11 @@ export default function SignUpForm() {
 				</span>
 			)}
 
-			<input
-				name="email"
-				type="email"
-				placeholder="Email"
-				value={formData.email}
-				onChange={handleChange}
-				required
-				className="h-10 lg:h-12 px-3 text-headline border-2 border-stroke rounded-md focus:outline-none focus:ring-2 focus:ring-button"
-			/>
+			{successMessage && (
+				<span className="text-green-600 text-center text-sm font-bold">
+					{successMessage}
+				</span>
+			)}
 
 			<input
 				name="password"
@@ -113,7 +102,7 @@ export default function SignUpForm() {
 			<button
 				type="submit"
 				className="h-10 md:h-12 w-full bg-button text-buttonText text-sm md:text-md font-medium rounded-md hover:opacity-90 transition">
-				Sign Up
+				Reset Password
 			</button>
 		</form>
 	);

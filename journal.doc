@@ -139,3 +139,26 @@ decided to research how to add functionality to each.
 -- Last thing to do is include your new declare Typescript module to load you declaration in the `tsconfig.json file
 -- -- in the include object add the route to your declarations `"src/types/**/*.d.ts"`
 -- -- if you are to export a specific style by itself as in out position here, we will need to import it to whatever file we use.
+
+05/11
+RESET PASSWORD FLOW (JWT + Nodemailer) [ Summarized by AI Copilot]
+1. User submits email → /api/auth/request-reset
+	-- Generate a JWT reset token
+
+	-- Save it to the user record
+
+	-- Email the user a reset link
+
+2. User clicks link → /reset-password?token=XYZ
+	-- Frontend calls /api/auth/verify-reset
+
+	-- If valid → show “New Password” form
+
+3. User submits new password → /api/auth/reset-password
+	-- Verify JWT
+
+	-- Hash password
+
+	-- Update DB
+
+	-- Invalidate token
