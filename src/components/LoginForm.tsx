@@ -10,12 +10,14 @@ type FormData = {
 };
 
 export default function LoginForm() {
-	//setUser after login in
-	//const { setUser } = useUserContext();
+	const router = Router;
 	const [formData, setFormData] = useState<FormData>({
 		email: "",
 		password: "",
 	});
+
+	//login error state
+	const [loginError, setLoginError] = useState<string | "">("");
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -33,12 +35,16 @@ export default function LoginForm() {
 			const res = await signIn("credentials", {
 				email: formData.email,
 				password: formData.password,
-				redirect: true, // Set to true to redirect to a default or specified callbackUrl after sign-in
+				redirect: false, // Set to true to redirect to a default or specified callbackUrl after sign-in
 				callbackUrl: "/", // Optional: URL to redirect to after success
 			});
 
 			if (res?.error) {
-				console.log("Invalid Credential");
+				setLoginError(res.error);
+			} else {
+				// Login was successful!
+				// NextAuth gives you the URL in res.url, but you must trigger the move:
+				router.push(res?.url || "/");
 			}
 		} catch (err) {
 			console.error("Error:", err);
@@ -71,6 +77,11 @@ export default function LoginForm() {
 				<span className="text-sm text-headline">OR</span>
 				<div className="flex-grow border-t-2 border-stroke"></div>
 			</div>
+
+			{/* display the credential error message if it exists */}
+			{loginError && (
+				<p className="text-red-500 text-sm text-center">{loginError}</p>
+			)}
 
 			<input
 				name="email"

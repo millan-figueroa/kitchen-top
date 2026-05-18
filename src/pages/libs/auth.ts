@@ -41,7 +41,7 @@ export const authOptions: NextAuthOptions = {
 					);
 
 					//check valid
-					console.log("isValid ", isValid);
+					// console.log("isValid ", isValid);
 					if (isValid) {
 						//return the user object
 						// Any object returned will be saved in `user` property of the JWT
