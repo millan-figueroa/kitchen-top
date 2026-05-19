@@ -1,4 +1,3 @@
-import { useUserContext } from "@/context/UserContext";
 import { useState } from "react";
 import Link from "next/link";
 import Router from "next/router";
@@ -18,6 +17,8 @@ export default function LoginForm() {
 
 	//login error state
 	const [loginError, setLoginError] = useState<string | "">("");
+	//show password state
+	const [showPassword, setShowPassword] = useState(false);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -95,13 +96,26 @@ export default function LoginForm() {
 
 			<input
 				name="password"
-				type="password"
+				type={showPassword ? "text" : "password"}
 				placeholder="Password"
 				value={formData.password}
 				onChange={handleChange}
 				required
 				className="h-10 lg:h-12 px-3 text-headline border-2 border-stroke rounded-md focus:outline-none focus:ring-2 focus:ring-button"
 			/>
+
+			{/* //show password checkbox */}
+			<div className="flex items-center">
+				<input
+					type="checkbox"
+					id="showPassword"
+					onChange={() => setShowPassword(!showPassword)}
+					className="h-4 w-4 text-button focus:ring-button border-stroke rounded"
+				/>
+				<label htmlFor="showPassword" className="ml-2 text-sm text-headline">
+					Show Password
+				</label>
+			</div>
 
 			<button
 				type="submit"
