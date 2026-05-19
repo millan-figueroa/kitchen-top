@@ -18,6 +18,8 @@ export default function SignUpForm() {
 	const router = useRouter();
 
 	const [error, setError] = useState<string | "">("");
+	//show password state
+	const [showPassword, setShowPassword] = useState(false);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -92,7 +94,7 @@ export default function SignUpForm() {
 
 			<input
 				name="password"
-				type="password"
+				type={showPassword ? "text" : "password"}
 				placeholder="Password"
 				value={formData.password}
 				onChange={handleChange}
@@ -102,13 +104,26 @@ export default function SignUpForm() {
 
 			<input
 				name="confirmPassword"
-				type="password"
+				type={showPassword ? "text" : "password"}
 				placeholder="Confirm Password"
 				value={formData.confirmPassword}
 				onChange={handleChange}
 				required
 				className="h-10 lg:h-12 px-3 text-headline border-2 border-stroke rounded-md focus:outline-none focus:ring-2 focus:ring-button"
 			/>
+
+			{/* //show password checkbox */}
+			<div className="flex items-center">
+				<input
+					type="checkbox"
+					id="showPassword"
+					onChange={() => setShowPassword(!showPassword)}
+					className="h-4 w-4 text-button focus:ring-button border-stroke rounded"
+				/>
+				<label htmlFor="showPassword" className="ml-2 text-sm text-headline">
+					Show Passwords
+				</label>
+			</div>
 
 			<button
 				type="submit"
