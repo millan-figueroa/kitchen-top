@@ -16,7 +16,7 @@ export const authOptions: NextAuthOptions = {
 				email: { label: "Email", type: "email" },
 				password: { label: "Password", type: "password" },
 			},
-			async authorize(credentials, req) {
+			async authorize(credentials) {
 				//credentials might be null
 				if (!credentials) {
 					throw new Error("Credentials are null");
@@ -127,12 +127,13 @@ export const authOptions: NextAuthOptions = {
 		},
 		async session({ session, token }) {
 			// Send properties to the client, like an access_token and user id from a provider.
-			session.user.id = token.id;
-			session.user.email = token.email;
-			session.user.name = token.name;
-			session.user.image = token.image;
-			session.user.githubId = token.githubId; // GitHub ID (string)
-			session.user.googleId = token.googleId; // Google ID (string)
+
+			session.user.id = token.id as string;
+			session.user.email = token.email as string | undefined;
+			session.user.name = token.name as string | undefined;
+			session.user.image = token.image as string | undefined;
+			session.user.githubId = token.githubId as string | undefined; // GitHub ID (string)
+			session.user.googleId = token.googleId as string | undefined; // Google ID (string)
 			console.log(session, " is this");
 			return session;
 		},
