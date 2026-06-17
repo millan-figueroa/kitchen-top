@@ -30,9 +30,6 @@ export const authOptions: NextAuthOptions = {
 					.collection("users")
 					.findOne({ email: credentials.email });
 
-				//check user
-				console.log("User: ", user);
-
 				//if user exists
 				if (user && user.password) {
 					const isValid = await bcrypt.compare(
@@ -40,8 +37,7 @@ export const authOptions: NextAuthOptions = {
 						user.password,
 					);
 
-					//check valid
-					// console.log("isValid ", isValid);
+					//check user valid
 					if (isValid) {
 						//return the user object
 						// Any object returned will be saved in `user` property of the JWT
