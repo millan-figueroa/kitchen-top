@@ -7,7 +7,7 @@ interface Recipe {
 }
 
 type RecipeProps = {
-	recipe: Recipe;
+	recipe: Recipe | null;
 };
 
 export default function Recipe({ recipe }: RecipeProps): JSX.Element {

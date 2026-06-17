@@ -183,7 +183,7 @@ export default function Main(): JSX.Element {
 							{aiError}
 						</div>
 					) : (
-						<>{recipe && <Recipe recipe={recipe} />}</>
+						<Recipe recipe={recipe} />
 					)}
 				</div>
 			)}
