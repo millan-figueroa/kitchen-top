@@ -21,6 +21,8 @@ export default function UserPage() {
 	const { data } = useSession();
 	const email = data?.user?.email || "";
 	const id = data?.user?.id || "";
+	//add user name to session data when user log in with credentials provider, so we can display the name in userpage
+	const user = data?.user?.name || null;
 
 	//modal pop up state
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -94,33 +96,35 @@ export default function UserPage() {
 		<div
 			key={recipe._id}
 			id={recipe._id}
-			className="border p-4 rounded-md mb-4">
+			className="border p-4 rounded-md mb-4 w-full md:w-1/3 hover:shadow-lg transition-shadow duration-300 hover:cursor-pointer">
 			<div className="flex justify-between">
 				<Link href={`/recipe/${recipe._id}`}>
 					<h3 className="text-lg font-semibold mb-2 hover:text-blue-600 hover:cursor-pointer">
 						{recipe.title}
 					</h3>
 				</Link>
-				<button
-					onClick={() => {
-						setSelectedRecipeId(recipe._id);
-						setIsModalOpen(true);
-						setOpenDeleteModal(true);
-						setOpenShareModal(false);
-					}}
-					className="text-red-500 hover:text-red-700">
-					<FaRegTrashCan />
-				</button>
-				<button
-					onClick={() => {
-						setSelectedRecipeId(recipe._id);
-						setIsModalOpen(true);
-						setOpenDeleteModal(false);
-						setOpenShareModal(true);
-					}}
-					className="text-red-500 hover:text-red-700">
-					<FaShareNodes />
-				</button>
+				<div className="flex gap-2">
+					<button
+						onClick={() => {
+							setSelectedRecipeId(recipe._id);
+							setIsModalOpen(true);
+							setOpenDeleteModal(true);
+							setOpenShareModal(false);
+						}}
+						className="text-red-500 hover:text-red-700 text-lg">
+						<FaRegTrashCan />
+					</button>
+					<button
+						onClick={() => {
+							setSelectedRecipeId(recipe._id);
+							setIsModalOpen(true);
+							setOpenDeleteModal(false);
+							setOpenShareModal(true);
+						}}
+						className="text-red-500 hover:text-red-700 text-lg">
+						<FaShareNodes />
+					</button>
+				</div>
 			</div>
 			{/* Display ingredients */}
 			<ul className="text-left">
@@ -138,7 +142,7 @@ export default function UserPage() {
 	));
 
 	return (
-		<div className="flex flex-col items-center justify-center min-h-screen bg-background">
+		<div className="flex flex-col items-center min-h-screen bg-background">
 			{/* popup for delete confirmation */}
 			{isModalOpen && openDeleteModal && (
 				<ModalPopUp
@@ -168,16 +172,13 @@ export default function UserPage() {
 			)}
 			{/* end of pop up delete confirmation */}
 
-			<div className="flex flex-col w-full max-w-md p-6 md:p-8 lg:p-10 text-headline text-center">
-				<h2 className="text-xl font-semibold p-10">User Account</h2>
+			<div className="flex flex-col w-full p-6 md:p-8 lg:p-10 text-headline">
 				<div>
 					{email && id ? (
-						<section className="mb-8 flex flex-col items-center gap-4">
-							<div className="w-1/3">
-								<p>Email: {email}</p>
-								<p>UID: {id}</p>
-							</div>
-							<hr className="w-full border-stroke" />
+						<section className="mb-8 flex flex-col  md:items-start gap-4">
+							<h1 className="text-xl md:text-2xl font-semibold mb-4 ">
+								{user ? ` ${user}` : "Your"} Saved Recipes:
+							</h1>
 							{deleteMessage && (
 								<div
 									className="mt-4 p-4 rounded-md text-center bg-green-100 text-green-800
@@ -185,9 +186,12 @@ export default function UserPage() {
 									{deleteMessage}
 								</div>
 							)}
-							{/* display user saved recipes */}
 							{savedRecipe.length > 0 ? (
-								<div className="w-2/3">{displaySavedRecipes}</div>
+								<div
+									className="w-full flex flex-col md:flex-row md:flex-wrap
+									gap-4">
+									{displaySavedRecipes}
+								</div>
 							) : (
 								<p>No saved recipes found.</p>
 							)}
