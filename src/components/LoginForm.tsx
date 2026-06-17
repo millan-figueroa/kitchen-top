@@ -23,14 +23,15 @@ export default function LoginForm() {
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setFormData((prev) => ({ ...prev, [name]: value }));
+		//clear login error when user starts typing
+		if (loginError) {
+			setLoginError("");
+		}
 	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		try {
 			e.preventDefault();
-			console.log(formData);
-			// Redirect to user page after login
-			//Router.push("/userpage");
 
 			// Call the signIn function with the 'credentials' provider and user data
 			const res = await signIn("credentials", {
@@ -41,7 +42,12 @@ export default function LoginForm() {
 			});
 
 			if (res?.error) {
-				setLoginError(res.error);
+				// Handle generic errors or capture the exact thrown message
+				if (res.error === "CredentialsSignin") {
+					setLoginError("Invalid email or password.");
+				} else {
+					setLoginError(res.error);
+				}
 			} else {
 				// Login was successful!
 				// NextAuth gives you the URL in res.url, but you must trigger the move:
