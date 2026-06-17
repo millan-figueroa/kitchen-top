@@ -1,5 +1,5 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -38,11 +38,6 @@ export default function UserPage() {
 	const [savedRecipe, setSavedRecipe] = useState<RecipeSaved[]>([]);
 	//return a message after detection of a recipe
 	const [deleteMessage, setDeleteMessage] = useState<string>("");
-
-	//logging out
-	const logOutHandle = () => {
-		signOut({ redirect: true, callbackUrl: "/" });
-	};
 
 	//if user is not logged in, redirect the to homepage
 	useEffect(() => {
@@ -132,12 +127,6 @@ export default function UserPage() {
 					<li key={index}>{ingredient}</li>
 				))}
 			</ul>
-			{/* Display instructions */}
-			{/* <ol className="text-left">
-				{recipe.instructions.map((instruction, index) => (
-					<li key={index}>{instruction}</li>
-				))}
-			</ol> */}
 		</div>
 	));
 
@@ -201,12 +190,6 @@ export default function UserPage() {
 					)}
 				</div>
 			</div>
-			<button
-				onClick={logOutHandle}
-				className="w-32 h-10 my-8 md:w-48 lg:w-60 lg:h-12 p-1 bg-button text-buttonText text-sm md:text-md lg:text-md rounded-md">
-				<span className="block md:hidden">Log Out</span>
-				<span className="hidden md:block lg:block">Log Out</span>
-			</button>
 		</div>
 	);
 }
