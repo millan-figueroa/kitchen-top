@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Phudu } from "next/font/google";
 import { FaSignInAlt, FaUser, FaSignOutAlt } from "react-icons/fa";
 import Link from "next/link";
@@ -19,9 +20,11 @@ export default function Header() {
 			<div
 				onClick={() => (window.location.href = "/")}
 				className={`${phudu.className} flex items-center justify-start cursor-pointer`}>
-				<img
+				<Image
 					className="w-6 mr-2 md:w-10 lg:w-12 lg:mr-3"
-					src="./spoon-and-fork.png"
+					src="/spoon-and-fork.png"
+					width={48}
+					height={48}
 					alt="spoon and fork"
 				/>
 				<h1 className="text-xl md:text-2xl lg:text-3xl font-black text-headline">
