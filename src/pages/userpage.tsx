@@ -88,13 +88,14 @@ export default function UserPage() {
 
 	//display user's saved recipes
 	const displaySavedRecipes = savedRecipe.map((recipe) => (
-		<div
+		<Link
+			href={`/recipe/${recipe._id}`}
 			key={recipe._id}
 			id={recipe._id}
-			className="border p-4 rounded-md mb-4 w-full md:w-1/3 hover:shadow-lg transition-shadow duration-300 hover:cursor-pointer">
+			className="border p-4 rounded-md mb-4 w-full md:w-1/3 hover:shadow-lg transition-shadow duration-300 hover:cursor-pointer hover:border-2">
 			<div className="flex justify-between">
 				<Link href={`/recipe/${recipe._id}`}>
-					<h3 className="text-lg font-semibold mb-2 hover:text-blue-600 hover:cursor-pointer">
+					<h3 className="text-lg font-semibold mb-2 hover:cursor-pointer">
 						{recipe.title}
 					</h3>
 				</Link>
@@ -127,7 +128,7 @@ export default function UserPage() {
 					<li key={index}>{ingredient}</li>
 				))}
 			</ul>
-		</div>
+		</Link>
 	));
 
 	return (
