@@ -145,7 +145,7 @@ export default function Main(): JSX.Element {
 	};
 
 	return (
-		<main className="flex flex-col justify-center items-center">
+		<section className="flex flex-col justify-center items-center w-full max-w-7xl mx-auto">
 			<div className="flex flex-col items-start mt-10 bg-background">
 				{/* InputForm Component */}
 				<InputForm
@@ -183,10 +183,10 @@ export default function Main(): JSX.Element {
 							{aiError}
 						</div>
 					) : (
-						<>{recipe && <Recipe recipe={recipe} />}</>
+						<Recipe recipe={recipe} />
 					)}
 				</div>
 			)}
-		</main>
+		</section>
 	);
 }
