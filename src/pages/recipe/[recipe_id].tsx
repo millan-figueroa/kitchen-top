@@ -88,7 +88,7 @@ export default function DisplaySingleRecipe({
 	}
 
 	return (
-		<main className="flex flex-col justify-center items-center">
+		<section className="flex flex-col justify-center items-center">
 			{/* display error message if deleteMessage is not empty */}
 			{deleteMessage && (
 				<div
@@ -100,7 +100,7 @@ export default function DisplaySingleRecipe({
 
 			{/* display the recipe if recipe is not null */}
 			{recipe && (
-				<div>
+				<div className="px-2">
 					{/* popup for delete confirmation */}
 					{isModalOpen && openDeleteModal && (
 						<ModalPopUp
@@ -168,7 +168,7 @@ export default function DisplaySingleRecipe({
 						</button>
 					</div>
 					<div ref={pdfRef}>
-						<Recipe recipe={recipe} />
+						<Recipe recipe={recipe} savedRecipe={true} />
 					</div>
 				</div>
 			)}
@@ -176,7 +176,7 @@ export default function DisplaySingleRecipe({
 				src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"
 				strategy="afterInteractive"
 			/>
-		</main>
+		</section>
 	);
 }
 
